@@ -1,38 +1,26 @@
-# syntax=docker/dockerfile:1
+# =========================================
+# Stage 1: Build the Angular Application
+# =========================================
+ARG NODE_VERSION=24.7.0-alpine
+ARG NGINX_VERSION=1.23.3-alpine  # Define a valid default version for NGINX
 
-# Comments are provided throughout this file to help you get started.
-# If you need more help, visit the Dockerfile reference guide at
-# https://docs.docker.com/go/dockerfile-reference/
+# Use a lightweight Node.js image for building
+FROM node:${NODE_VERSION} AS builder
 
-# Want to help us make this template better? Share your feedback here: https://forms.gle/ybq9Krt8jtBL3iCk7
-
-ARG NODE_VERSION=24
-
-FROM node:${NODE_VERSION}-alpine
-
-# Use production node environment by default.
-ENV NODE_ENV production
-
-
-WORKDIR /usr/src/app
-
-# Download dependencies as a separate step to take advantage of Docker's caching.
-# Leverage a cache mount to /root/.npm to speed up subsequent builds.
-# Leverage a bind mounts to package.json and package-lock.json to avoid having to copy them into
-# into this layer.
-RUN --mount=type=bind,source=package.json,target=package.json \
-    --mount=type=bind,source=package-lock.json,target=package-lock.json \
-    --mount=type=cache,target=/root/.npm \
-    npm ci --omit=dev
-
-# Run the application as a non-root user.
-USER node
-
-# Copy the rest of the source files into the image.
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN --mount=type=cache,target=/root/.npm npm ci
 COPY . .
+RUN npm run build
 
-# Expose the port that the application listens on.
+# =========================================
+# Stage 2: Prepare Nginx to Serve Static Files
+# =========================================
+FROM nginxinc/nginx-unprivileged:${NGINX_VERSION} AS runner
+
+USER nginx
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY --chown=nginx:nginx --from=builder /app/dist/*/browser /usr/share/nginx/html
 EXPOSE 8080
-
-# Run the application.
-CMD npm run start
+ENTRYPOINT ["nginx", "-c", "/etc/nginx/nginx.conf"]
+CMD ["-g", "daemon off;"]
