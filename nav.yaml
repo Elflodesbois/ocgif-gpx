@@ -1,0 +1,19 @@
+# ce fichier yaml représente l'arborrscence de navigation de l'application
+# les lignes commencant par un tiret ('-') sont des fonctionnalités
+
+app:
+    administration (extends UC):
+        - suppression de toutes les traces
+    utilisateurs connectés (extends UA):
+        - suppression de ses propres traces
+    utilisateurs anonymes:
+        affichage traces:
+            - afficher les traces présentes en base (par sélection des traces) [couleurs~difficulté]
+            - tri des traces pour recherche plus rapide
+            - télécharger une trace
+            - consulter les traces
+        formulaire:
+            - ajouter une trace
+            - déduire les infos calculables et remplir le formulaire
+
+    
