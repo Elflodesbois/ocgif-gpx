@@ -1,9 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { GpxMap } from "./gpx-map/gpx-map";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, GpxMap],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
