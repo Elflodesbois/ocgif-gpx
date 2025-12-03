@@ -1,0 +1,22 @@
+<div style="max-width: 400px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px;">
+  <h3>Uploader une trace GPX</h3>
+
+  <div>
+    <label>Nom :</label>
+    <input type="text" [(ngModel)]="name" placeholder="Nom de la trace">
+  </div>
+
+  <div>
+    <label>Description :</label>
+    <textarea [(ngModel)]="description" placeholder="Description"></textarea>
+  </div>
+
+  <div>
+    <label>Fichier GPX :</label>
+    <input type="file" (change)="onFileSelected($event)" accept=".gpx">
+  </div>
+
+  <button (click)="upload()" style="margin-top: 10px;">Envoyer GPX</button>
+
+  <p *ngIf="message">{{ message }}</p>
+</div>
