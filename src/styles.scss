@@ -6,3 +6,18 @@ body {
     --gpx-light-blue: #3794A2;
     --gpx-black: #242424;
 }
+
+/* properties for injected DOM from open layers */
+#ol-map .ol-control.ol-zoom {
+    left: auto;
+    right: .5em;
+}
+
+#ol-map .ol-control.ol-rotate {
+    right: 2.2em;
+}
+
+#ol-map .ol-control.ol-fullscreen {
+    right: .5em;
+    bottom: 1.2em;
+}

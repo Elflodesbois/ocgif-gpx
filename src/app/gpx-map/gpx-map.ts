@@ -12,7 +12,8 @@ import Fill from 'ol/style/Fill';
 import Stroke from 'ol/style/Stroke';
 import CircleStyle from 'ol/style/Circle.js';
 import { defaults as interactionDefaults } from 'ol/interaction/defaults';
-import { defaults as controlDefaults } from 'ol/control/defaults'
+import { defaults as controlDefaults } from 'ol/control/defaults';
+import { Control } from 'ol/control';
 
 @Component({
   selector: 'app-gpx-map',
@@ -24,6 +25,7 @@ export class GpxMap implements OnInit {
     map!: Map;
     style!: { [key: string]: Style | Style[] };
 
+    
 
     ngOnInit(): void {
         const geometryStyles: { [key: string]: Style|Style[] } = {
@@ -61,6 +63,10 @@ export class GpxMap implements OnInit {
                 }),
             ]
         };
+        
+        let fullscreenButtonContainer = document.getElementById("fullscreen-button");
+        let fullscreenButton = fullscreenButtonContainer?.children[0];
+        fullscreenButton?.addEventListener('click', this.fullscreenCallback);
 
         const vector1 = new VectorLayer({
             source: new VectorSource({
@@ -113,11 +119,27 @@ export class GpxMap implements OnInit {
                 vector1, vector2, vector3
             ],
 
-            controls: controlDefaults({
-                
-            }),
+            controls: controlDefaults().extend([
+                new Control({
+                    // || undefined: si fullscreenButton est null, le transforme en undefined
+                    element: fullscreenButtonContainer || undefined
+                })
+            ]),
 
             target: 'ol-map'
         });
+    }
+
+    private fullscreenCallback(event: Event): void {
+        let tgt = event.target;
+        if (tgt instanceof Element) {
+            if (tgt.innerHTML == "⛶") {
+                document.getElementById('ol-map')?.requestFullscreen();
+                tgt.innerHTML = "E";
+            } else {
+                document.exitFullscreen();
+                tgt.innerHTML = "⛶";
+            }
+        }
     }
 }
