@@ -1,0 +1,22 @@
+/* debug */
+div {
+    border: 1px solid black;
+}
+
+#gpx-display-main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+#gpx-display-main div {
+    width: 45vw;
+}
+
+#gpx-display-right {
+    min-height: 80vh;
+}
+
+#gpx-display-right * {
+    min-height: 80vh;
+}
