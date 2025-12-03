@@ -2,3 +2,6 @@ lancer mon server node avec API
 
 node server.js
 
+et pour lancer angular
+
+ng serve
