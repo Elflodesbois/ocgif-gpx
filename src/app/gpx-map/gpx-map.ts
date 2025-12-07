@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import Map from 'ol/Map';
 import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
@@ -14,18 +14,18 @@ import CircleStyle from 'ol/style/Circle.js';
 import { defaults as interactionDefaults } from 'ol/interaction/defaults';
 import { defaults as controlDefaults } from 'ol/control/defaults';
 import { Control } from 'ol/control';
+import { ToggleStateButton } from "../toggle-state-button/toggle-state-button";
 
 @Component({
   selector: 'app-gpx-map',
-  imports: [],
+  imports: [ToggleStateButton],
   templateUrl: './gpx-map.html',
   styleUrl: './gpx-map.scss'
 })
 export class GpxMap implements OnInit {
     map!: Map;
     style!: { [key: string]: Style | Style[] };
-
-    
+    isFullscreen = signal(0);
 
     ngOnInit(): void {
         const geometryStyles: { [key: string]: Style|Style[] } = {
@@ -65,8 +65,6 @@ export class GpxMap implements OnInit {
         };
         
         let fullscreenButtonContainer = document.getElementById("fullscreen-button");
-        let fullscreenButton = fullscreenButtonContainer?.children[0];
-        fullscreenButton?.addEventListener('click', this.fullscreenCallback);
 
         const vector1 = new VectorLayer({
             source: new VectorSource({
@@ -128,18 +126,18 @@ export class GpxMap implements OnInit {
 
             target: 'ol-map'
         });
+
+        document.addEventListener('fullscreenchange', () => {
+            this.isFullscreen.set(document.fullscreenElement ? 1 : 0);
+        });
     }
 
-    private fullscreenCallback(event: Event): void {
-        let tgt = event.target;
-        if (tgt instanceof Element) {
-            if (tgt.innerHTML == "⛶") {
-                document.getElementById('ol-map')?.requestFullscreen();
-                tgt.innerHTML = "E";
-            } else {
-                document.exitFullscreen();
-                tgt.innerHTML = "⛶";
-            }
-        }
+    enterFullscreen() {
+        //this.map.getViewport()
+        document.getElementById('ol-map')?.requestFullscreen();
+    }
+
+    exitFullscreen() {
+        document.exitFullscreen();
     }
 }
