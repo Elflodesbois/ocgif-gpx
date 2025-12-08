@@ -63,8 +63,6 @@ export class GpxMap implements OnInit {
                 }),
             ]
         };
-        
-        let fullscreenButtonContainer = document.getElementById("fullscreen-button");
 
         const vector1 = new VectorLayer({
             source: new VectorSource({
@@ -101,6 +99,8 @@ export class GpxMap implements OnInit {
             },
         });
 
+        let fullscreenButtonContainer = document.getElementById("fullscreen-button");
+
         this.map = new Map({
             interactions: interactionDefaults({
                 doubleClickZoom: false
@@ -132,9 +132,8 @@ export class GpxMap implements OnInit {
         });
     }
 
-    enterFullscreen() {
-        //this.map.getViewport()
-        document.getElementById('ol-map')?.requestFullscreen();
+    enterFullscreen() {        
+        this.map.getTargetElement().requestFullscreen();
     }
 
     exitFullscreen() {
