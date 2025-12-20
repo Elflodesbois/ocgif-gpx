@@ -21,3 +21,9 @@ body {
     right: .5em;
     bottom: 1.2em;
 }
+
+#ol-map .ol-control.ol-legend {
+    left: .5em;
+    bottom: .5em;
+    z-index: 1;
+}

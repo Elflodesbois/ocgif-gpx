@@ -1,9 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
-import Map from 'ol/Map';
-import View from 'ol/View';
-import TileLayer from 'ol/layer/Tile';
-import OSM from 'ol/source/OSM';
-import { fromLonLat } from 'ol/proj';
+import { Component, OnInit, signal, inject } from '@angular/core';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import GPX from 'ol/format/GPX.js';
@@ -11,19 +6,18 @@ import Style from 'ol/style/Style';
 import Fill from 'ol/style/Fill';
 import Stroke from 'ol/style/Stroke';
 import CircleStyle from 'ol/style/Circle.js';
-import { defaults as interactionDefaults } from 'ol/interaction/defaults';
-import { defaults as controlDefaults } from 'ol/control/defaults';
-import { Control } from 'ol/control';
 import { ToggleStateButton } from "../toggle-state-button/toggle-state-button";
+import { MapLegend } from '../map-legend/map-legend';
+import { MapService } from '../map-service';
 
 @Component({
   selector: 'app-gpx-map',
-  imports: [ToggleStateButton],
+  imports: [ToggleStateButton, MapLegend],
   templateUrl: './gpx-map.html',
   styleUrl: './gpx-map.scss'
 })
 export class GpxMap implements OnInit {
-    map!: Map;
+    mapWrapper = inject(MapService);
     style!: { [key: string]: Style | Style[] };
     isFullscreen = signal(0);
 
@@ -99,33 +93,8 @@ export class GpxMap implements OnInit {
             },
         });
 
-        let fullscreenButtonContainer = document.getElementById("fullscreen-button");
 
-        this.map = new Map({
-            interactions: interactionDefaults({
-                doubleClickZoom: false
-            }),
-
-            view: new View({
-                // centrer par défaut sur gif-sur-yvette, avec un zoom approprié
-                center: fromLonLat([2.1258440141926775, 48.700949565647925]),
-                zoom: 13
-            }),
-
-            layers: [
-                new TileLayer({source: new OSM()}),
-                vector1, vector2, vector3
-            ],
-
-            controls: controlDefaults().extend([
-                new Control({
-                    // || undefined: si fullscreenButton est null, le transforme en undefined
-                    element: fullscreenButtonContainer || undefined
-                })
-            ]),
-
-            target: 'ol-map'
-        });
+        this.mapWrapper.initMap();
 
         document.addEventListener('fullscreenchange', () => {
             this.isFullscreen.set(document.fullscreenElement ? 1 : 0);
@@ -133,7 +102,7 @@ export class GpxMap implements OnInit {
     }
 
     enterFullscreen() {        
-        this.map.getTargetElement().requestFullscreen();
+        this.mapWrapper.map.getTargetElement().requestFullscreen();
     }
 
     exitFullscreen() {
