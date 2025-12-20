@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { MapService } from '../map-service';
 
 @Component({
   selector: 'app-map-legend',
@@ -7,5 +8,15 @@ import { Component } from '@angular/core';
   styleUrl: './map-legend.scss'
 })
 export class MapLegend {
+    mapWrapper = inject(MapService)
+    n = 0;
 
+    addgrandtour() {
+        const layer = this.mapWrapper.vectorizeGpxFile('grand_tour.gpx');
+        this.mapWrapper.addLayer('name'+this.n++, layer);
+    }
+
+    rmgrandtour(name: string) {
+        this.mapWrapper.removeLayer(name);
+    }
 }

@@ -1,3 +1,16 @@
-<div>
-    <p>text</p>
-</div>
+<button (click)="addgrandtour()">layer++</button>
+<table id="legend">
+    <thead>
+        <td class="header-message" colspan="2">Légende</td>
+    </thead>
+    @for (layerName of mapWrapper.getLayers(); track $index) {
+        <tr>
+            <td>{{layerName}}</td>
+            <td><button class="square-btn" (click)="mapWrapper.removeLayer(layerName)">🗑</button></td>
+        </tr>
+    } @empty {
+        <tr>
+            <td class="empty-message" colspan="2">Ajoutez des traces <br /> pour les gérer ici</td>
+        </tr>
+    }
+</table>

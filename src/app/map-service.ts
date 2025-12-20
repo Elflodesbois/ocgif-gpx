@@ -21,7 +21,7 @@ import { Control } from 'ol/control';
 })
 export class MapService {
     public map!: Map;
-
+    private layers!: { [key: string]: VectorLayer };
     private geometryStyles: { [key: string]: Style|Style[] } = {
         'Point': new Style({
             image: new CircleStyle({
@@ -64,14 +64,9 @@ export class MapService {
 
     initMap(): void {
         let fullscreenButtonContainer = document.getElementById("fullscreen-button");
+        let legendContainer = document.getElementById("legend-container");
 
-        let vector1 = new VectorLayer({
-                source: new VectorSource({
-                    url: 'grand_tour.gpx',
-                    format: new GPX(),
-                }),
-                style: this.geometryToStyle  
-                });
+        this.layers = {};
 
         this.map = new Map({
             interactions: interactionDefaults({
@@ -84,22 +79,51 @@ export class MapService {
                 zoom: 13
             }),
 
-            
-
             layers: [
-                new TileLayer({source: new OSM()}),
-                vector1
+                new TileLayer({source: new OSM()})
             ],
-            
 
             controls: controlDefaults().extend([
                 new Control({
                     // || undefined: si fullscreenButton est null, le transforme en undefined
                     element: fullscreenButtonContainer || undefined
+                }),
+                new Control({
+                    element: legendContainer || undefined
                 })
             ]),
 
             target: 'ol-map'
         });
-    } 
+    }
+
+    addLayer(name: string, layer: VectorLayer) {
+        this.layers[name] = layer;
+        this.map.addLayer(layer);
+    }
+
+    removeLayer(name: string) {
+        for (let key in this.layers) {
+            if (key === name) {
+                this.map.removeLayer(this.layers[name]);
+                delete this.layers[name];
+                console.log(this.layers);
+                return;
+            }
+        }
+    }
+
+    getLayers(): Array<string> {
+        return Object.keys(this.layers);
+    }
+
+    vectorizeGpxFile(filepath: string) : VectorLayer {
+        return new VectorLayer({
+            source: new VectorSource({
+                url: filepath,
+                format: new GPX()
+            }),
+            style: this.geometryToStyle
+        });
+    }
 }
