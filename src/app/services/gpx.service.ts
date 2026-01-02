@@ -11,7 +11,17 @@ export class GpxService {
 
   constructor(private http: HttpClient) {}
 
-   uploadTrace(formData: FormData): Observable<any> {
+  uploadTrace(formData: FormData): Observable<any> {
     return this.http.post(`${this.apiUrl}/upload`, formData);
   }
+
+  getTraces() {
+    return this.http.get<any[]>('http://localhost:3000/api/gpx');
+  }
+
+  downloadTrace(id: number) {
+    return this.http.get(`${this.apiUrl}/download/${id}`, { responseType: 'blob' });
+  }
+
+
 }
