@@ -8,15 +8,41 @@ module.exports = function(pool) {
 
     router.post('/upload', upload.single('file'), async (req, res) => {
         try {
-            const { name, description } = req.body;
-            const fileContent = req.file.buffer.toString('utf-8');
+           const {
+                nom,
+                description,
+                niveau,
+                distance_km,
+                denivele,
+                date_parcours
+            } = req.body;
+
+            if (!nom || !niveau || !req.file) {
+                return res.status(400).json({ error: 'Champs obligatoires manquants' });
+            }
+
+            // Contenu du fichier GPX stocké tel quel
+            const fichier_gpx = req.file.buffer.toString('utf-8');
 
             const sql = `
-                INSERT INTO traces (name, description, gpx_file)
-                VALUES ($1, $2, $3) RETURNING *;
+                INSERT INTO traces
+                (nom, description, niveau, distance_km, denivele, date_parcours, fichier_gpx)
+                VALUES ($1, $2, $3, $4, $5, $6, $7)
+                RETURNING *;
             `;
 
-            const result = await pool.query(sql, [name, description, fileContent]);
+            const values = [
+                nom,
+                description || null,
+                niveau,
+                distance_km ? parseFloat(distance_km) : null,
+                denivele ? parseInt(denivele) : null,
+                date_parcours || null,
+                fichier_gpx
+            ];
+
+            const result = await pool.query(sql, values);
+
 
             res.json({ success: true, trace: result.rows[0] });
 

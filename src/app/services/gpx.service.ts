@@ -11,12 +11,7 @@ export class GpxService {
 
   constructor(private http: HttpClient) {}
 
-  uploadGPX(name: string, description: string, file: File): Observable<any> {
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("description", description);
-    formData.append("file", file);
-
+   uploadTrace(formData: FormData): Observable<any> {
     return this.http.post(`${this.apiUrl}/upload`, formData);
   }
 }

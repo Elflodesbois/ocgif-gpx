@@ -1,22 +1,46 @@
-<div style="max-width: 400px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px;">
-  <h3>Uploader une trace GPX</h3>
+<main>
+  <h1>Ajouter une trace GPX</h1>
 
-  <div>
-    <label>Nom :</label>
-    <input type="text" [(ngModel)]="name" placeholder="Nom de la trace">
-  </div>
+  <form (ngSubmit)="envoyer()">
+    <div>
+      <label>Fichier GPX</label>
+      <input type="file" accept=".gpx" (change)="onFileSelected($event)" required>
+    </div>
 
-  <div>
-    <label>Description :</label>
-    <textarea [(ngModel)]="description" placeholder="Description"></textarea>
-  </div>
+    <div>
+      <label>Nom</label>
+      <input type="text" [(ngModel)]="nom" name="nom" required>
+    </div>
 
-  <div>
-    <label>Fichier GPX :</label>
-    <input type="file" (change)="onFileSelected($event)" accept=".gpx">
-  </div>
+    <div>
+      <label>Description</label>
+      <textarea [(ngModel)]="description" name="description"></textarea>
+    </div>
 
-  <button (click)="upload()" style="margin-top: 10px;">Envoyer GPX</button>
+    <div>
+      <label>Niveau</label>
+      <select [(ngModel)]="niveau" name="niveau" required>
+        <option *ngFor="let n of niveaux" [value]="n">{{ n }}</option>
+      </select>
+    </div>
 
-  <p *ngIf="message">{{ message }}</p>
-</div>
+    <div>
+      <label>Distance (km)</label>
+      <input type="number" [(ngModel)]="distance_km" name="distance_km">
+    </div>
+
+    <div>
+      <label>Dénivelé (m)</label>
+      <input type="number" [(ngModel)]="denivele" name="denivele">
+    </div>
+
+    <div>
+      <label>Date du parcours</label>
+      <input type="date" [(ngModel)]="date_parcours" name="date_parcours">
+    </div>
+
+    <button type="submit">Envoyer</button>
+  </form>
+
+  <p *ngIf="message" style="margin-top: 15px; font-weight: bold; color: green;">{{ message }}</p>
+</main>
