@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GpxService } from '../../services/gpx.service';
 import { Trace } from '../../models/trace.model';
+import { Difficulty  } from '../../services/difficulty.service';
+
+
 
 @Component({
   selector: 'app-list-gpx',
@@ -35,14 +38,47 @@ export class ListGpx implements OnInit {
     'groupe école', 'groupe evo', 'groupe perf'
   ];
 
-  constructor(private gpxService: GpxService) {}
+  
+
+  constructor(
+    private gpxService: GpxService,
+    private diffService: Difficulty 
+  ) {}
 
   ngOnInit() {
     this.gpxService.getTraces().subscribe(data => {
-      this.traces = data;
+
+      this.traces = data.map(t => {
+
+        const nEte = this.diffService.verdict(
+          t.niveau,
+          t.distance_km ?? 0,
+          t.denivele ?? 0,
+          false
+        );
+
+        const nHiver = this.diffService.verdict(
+          t.niveau,
+          t.distance_km ?? 0,
+          t.denivele ?? 0,
+          true
+        );
+
+        return {
+          ...t,
+          difficulte: {
+            niveauNormal: nEte,
+            niveauDifficile: nHiver,
+            normal: this.diffService.niveauToColor(nEte),
+            difficile: this.diffService.niveauToColor(nHiver)
+          }
+        };
+      });
+
       this.applyFilters();
     });
   }
+
 
   toggleNiveau(niveau: string) {
     if (this.niveauxFiltres.includes(niveau)) {
@@ -151,4 +187,6 @@ export class ListGpx implements OnInit {
     if (this.currentSortColumn !== n) return '↕';
     return this.currentSortDirection ? '↑' : '↓';
   }
+
 }
+

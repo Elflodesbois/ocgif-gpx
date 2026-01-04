@@ -46,6 +46,8 @@
       <th (click)="sortColumn(4)">Dénivelé (m) <span>{{ getSortIcon(4) }}</span></th>
       <th (click)="sortColumn(5)">Date parcours <span>{{ getSortIcon(5) }}</span></th>
       <th>GPX</th>
+      <th>difficulte été</th>
+      <th>difficulte hiver</th>
     </tr>
   </thead>
 
@@ -60,6 +62,8 @@
       <td>
         <button (click)="download(t)">Télécharger</button>
       </td>
+      <td [style.background]="t.difficulte?.normal" [title]="t.difficulte?.niveauNormal"></td>
+      <td [style.background]="t.difficulte?.difficile" [title]="t.difficulte?.niveauDifficile"></td>
     </tr>
   </tbody>
 </table>
