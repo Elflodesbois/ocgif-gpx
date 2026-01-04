@@ -5,6 +5,7 @@ import { Register } from './pages/register/register';
 import { Dashboard } from './pages/dashboard/dashboard';
 import { authGuard } from './guards/auth-guard';
 import { MesTraces } from './pages/mes-traces/mes-traces';
+import { AjoutGpx } from './pages/ajout-gpx/ajout-gpx';
 
 export const routes: Routes = [
   { path: 'login', component: Login },
@@ -17,6 +18,11 @@ export const routes: Routes = [
   },
   { path: 'mes-traces', component: MesTraces, canActivate: [authGuard] // protégé
    },
+   {
+    path: 'ajout-gpx',
+    component: AjoutGpx,
+    canActivate: [authGuard] // protégé
+  },
 
   { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
