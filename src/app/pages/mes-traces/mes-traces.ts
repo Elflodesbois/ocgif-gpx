@@ -1,10 +1,11 @@
 import { Component, OnInit  } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Trace } from '../../services/trace';
 
 @Component({
   selector: 'app-mes-traces',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './mes-traces.html',
   styleUrl: './mes-traces.scss'
 })

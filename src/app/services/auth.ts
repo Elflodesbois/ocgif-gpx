@@ -11,11 +11,11 @@ export class Auth {
   constructor(private http: HttpClient) {}
 
   register(username: string, password: string) {
-    return this.http.post<any>('/api/users/register', { username, password });
+    return this.http.post<any>('http://localhost:3000/api/users/register', { username, password });
   }
 
   login(username: string, password: string) {
-    return this.http.post<any>('/api/users/login', { username, password })
+    return this.http.post<any>('http://localhost:3000/api/users/login', { username, password })
       .pipe(
         tap(res => {
           if (res.token) {

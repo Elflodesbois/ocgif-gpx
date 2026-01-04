@@ -2,8 +2,12 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+const JWT_SECRET = process.env.JWT_SECRET || "CléDeTestTemporaire"; // fallback temporaire
+
 module.exports = function(pool) {
     const router = express.Router();
+    
+
 
     // 🔹 Inscription
     router.post('/register', async (req, res) => {
