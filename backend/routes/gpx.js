@@ -2,6 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const authMiddleware = require('../middleware/authMiddleware');
 
+const JWT_SECRET = process.env.JWT_SECRET || "CléDeTestTemporaire"; // fallback temporaire
 
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -28,8 +29,8 @@ module.exports = function(pool) {
 
             const sql = `
                 INSERT INTO traces
-                (nom, description, niveau, distance_km, denivele, date_parcours, fichier_gpx)
-                VALUES ($1, $2, $3, $4, $5, $6, $7)
+                (nom, description, niveau, distance_km, denivele, date_parcours, fichier_gpx, user_id)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
                 RETURNING *;
             `;
 

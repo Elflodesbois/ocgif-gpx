@@ -4,6 +4,7 @@ import { Login } from './pages/login/login';
 import { Register } from './pages/register/register';
 import { Dashboard } from './pages/dashboard/dashboard';
 import { authGuard } from './guards/auth-guard';
+import { MesTraces } from './pages/mes-traces/mes-traces';
 
 export const routes: Routes = [
   { path: 'login', component: Login },
@@ -14,6 +15,8 @@ export const routes: Routes = [
     component: Dashboard,
     canActivate: [authGuard] // protégé
   },
+  { path: 'mes-traces', component: MesTraces, canActivate: [authGuard] // protégé
+   },
 
   { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];

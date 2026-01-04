@@ -1,0 +1,30 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #1e1e1e;
+  color: white;
+
+  .menu {
+    display: flex;
+    list-style: none;
+    gap: 15px;
+
+    li a {
+      color: white;
+      text-decoration: none;
+    }
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    button {
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  }
+}
