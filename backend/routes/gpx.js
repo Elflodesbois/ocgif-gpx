@@ -6,7 +6,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 module.exports = function(pool) {
     const router = express.Router();
 
-    router.post('/upload', upload.single('file'), async (req, res) => {
+    router.post('/upload',authMiddleware, upload.single('file'), async (req, res) => {
         try {
            const {
                 nom,
@@ -38,7 +38,8 @@ module.exports = function(pool) {
                 distance_km ? parseFloat(distance_km) : null,
                 denivele ? parseInt(denivele) : null,
                 date_parcours || null,
-                fichier_gpx
+                fichier_gpx,
+                req.userId
             ];
 
             const result = await pool.query(sql, values);
@@ -72,6 +73,44 @@ module.exports = function(pool) {
         } catch (err) {
             console.error(err);
             res.status(500).json({ error: 'Erreur récupération traces' });
+        }
+    });
+
+    // 🔹 Voir toutes ses traces
+    router.get('/mes-traces', authMiddleware, async (req, res) => {
+        try {
+            const result = await pool.query(`
+                SELECT id, nom, description, niveau, distance_km, denivele, date_parcours, cree_le
+                FROM traces
+                WHERE user_id = $1
+                ORDER BY cree_le DESC
+            `, [req.userId]);
+
+            res.json(result.rows);
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Erreur récupération traces' });
+        }
+    });
+
+    // 🔹 Supprimer une trace
+    router.delete('/mes-traces/:id', authMiddleware, async (req, res) => {
+        const { id } = req.params;
+
+        try {
+            const result = await pool.query(
+                'DELETE FROM traces WHERE id = $1 AND user_id = $2 RETURNING *',
+                [id, req.userId]
+            );
+
+            if (!result.rows.length) {
+                return res.status(404).json({ error: 'Trace introuvable ou non autorisée' });
+            }
+
+            res.json({ success: true, message: 'Trace supprimée' });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Erreur suppression trace' });
         }
     });
 

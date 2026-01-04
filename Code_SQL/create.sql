@@ -31,3 +31,5 @@ CREATE TABLE traces (
     fichier_gpx TEXT NOT NULL,   -- on garde comme actuellement
     cree_le TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+ALTER TABLE traces ADD COLUMN user_id INT REFERENCES users(id);
