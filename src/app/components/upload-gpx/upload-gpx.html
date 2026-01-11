@@ -1,0 +1,46 @@
+<main>
+  <h1>Ajouter une trace GPX</h1>
+
+  <form (ngSubmit)="envoyer()">
+    <div>
+      <label>Fichier GPX</label>
+      <input type="file" accept=".gpx" (change)="onFileSelected($event)" required>
+    </div>
+
+    <div>
+      <label>Nom</label>
+      <input type="text" [(ngModel)]="nom" name="nom" required>
+    </div>
+
+    <div>
+      <label>Description</label>
+      <textarea [(ngModel)]="description" name="description"></textarea>
+    </div>
+
+    <div>
+      <label>Niveau</label>
+      <select [(ngModel)]="niveau" name="niveau" required>
+        <option *ngFor="let n of niveaux" [value]="n">{{ n }}</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Distance (km)</label>
+      <input type="number" [(ngModel)]="distance_km" name="distance_km">
+    </div>
+
+    <div>
+      <label>Dénivelé (m)</label>
+      <input type="number" [(ngModel)]="denivele" name="denivele">
+    </div>
+
+    <div>
+      <label>Date du parcours</label>
+      <input type="date" [(ngModel)]="date_parcours" name="date_parcours">
+    </div>
+
+    <button type="submit">Envoyer</button>
+  </form>
+
+  <p *ngIf="message" style="margin-top: 15px; font-weight: bold; color: green;">{{ message }}</p>
+</main>

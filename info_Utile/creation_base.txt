@@ -1,0 +1,9 @@
+la base s'appele
+
+gpxdb
+
+on doit la crée dans pgAdmin
+
+en pencer a metre son mdp dans le document 
+
+.env

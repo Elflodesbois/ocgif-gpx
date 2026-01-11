@@ -1,0 +1,10 @@
+npm install express pg multer bcrypt jsonwebtoken dotenv cors
+
+Package      -->    Sert à quoi ?
+express      -->	créer mon API
+pg           -->	se connecter à PostgreSQL
+multer       -->	upload de fichiers (GPX)
+bcrypt       -->	sécuriser les mots de passe
+jsonwebtoken -->	gérer l’authentification
+dotenv       -->	charger les variables du fichier .env
+cors	     -->    permettre Angular d’appeler mon API
