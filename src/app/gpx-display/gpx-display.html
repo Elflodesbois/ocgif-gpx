@@ -1,7 +1,30 @@
+<app-gpx-navbar></app-gpx-navbar>
 <div id="gpx-display-main">
-    <div id="gpx-display-left">
-    </div>
-    <div id="gpx-display-right">
-        <app-gpx-map></app-gpx-map>
-    </div>
+    @switch (mode.state()) {
+        @case ('traces') {
+            <div id="gpx-display-left">
+            </div>
+            <div id="gpx-display-right">
+                <app-gpx-map></app-gpx-map>
+            </div>
+        }
+
+        @case ('login') {
+            <p>login</p>
+        }
+
+        @case ('upload') {
+            <p>upload</p>
+        }
+
+        @case ('liste') {
+            <p>liste</p>
+        }
+
+        @default {
+            <p>ERREUR! Chloé, si tu vois ça, c'est que tu n'as pas mis <br />
+            ton module dans <code>gpx-display.html</code> 😁</p>
+        }
+    }
+    
 </div>

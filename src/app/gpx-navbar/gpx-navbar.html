@@ -1,0 +1,38 @@
+<div id="navbar-container">
+    <mat-button-toggle-group id="navbar-left" class="navbar-group" [hideSingleSelectionIndicator]="true">
+
+        <mat-button-toggle 
+        value="traces"
+        [checked]="mode.state() === 'traces'"
+        (change)="mode.changeMode('traces')">
+            <mat-icon>timeline</mat-icon>Traces
+        </mat-button-toggle>
+
+        <mat-button-toggle 
+        value="liste"
+        [checked]="mode.state() === 'liste'"
+        (change)="mode.changeMode('liste')">
+            <mat-icon>list</mat-icon>Gérer mes traces
+        </mat-button-toggle>
+
+        <mat-button-toggle 
+        value="upload"
+        [checked]="mode.state() === 'upload'"
+        (change)="mode.changeMode('upload')">
+            <mat-icon>upload</mat-icon>Importer une trace
+        </mat-button-toggle>
+
+    </mat-button-toggle-group>
+    <div id="navbar-middle">
+
+        <img id="logo" src="logo.jpg" />
+
+    </div>
+    <div id="navbar-right" class="navbar-group">
+
+        <button matButton (click)="mode.changeMode('login')">
+            <mat-icon>login</mat-icon>Login
+        </button>
+
+    </div>
+</div>
