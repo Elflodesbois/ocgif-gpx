@@ -1,0 +1,36 @@
+#app-name {
+    font-size: large;
+    align-self: center;
+    justify-self: flex-start;
+}
+
+#navbar-expander {
+    flex-grow: 10;
+}
+
+#navbar-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100%;
+    height: var(--navbar-height);
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    background-color: var(--gpx-black);
+    color: var(--gpx-white);
+}
+
+#navbar-left {
+    display: flex;
+    flex-direction: row;
+    column-gap: 1vw;
+}
+
+#navbar-right, #navbar-left {
+    margin-right: 1vw;
+    margin-left: 1vw;
+}
+
+#logo {
+    height: var(--navbar-height);
+}

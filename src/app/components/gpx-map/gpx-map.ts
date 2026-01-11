@@ -1,14 +1,7 @@
 import { Component, OnInit, signal, inject } from '@angular/core';
-import VectorLayer from 'ol/layer/Vector';
-import VectorSource from 'ol/source/Vector';
-import GPX from 'ol/format/GPX.js';
-import Style from 'ol/style/Style';
-import Fill from 'ol/style/Fill';
-import Stroke from 'ol/style/Stroke';
-import CircleStyle from 'ol/style/Circle.js';
 import { ToggleStateButton } from "../toggle-state-button/toggle-state-button";
 import { MapLegend } from '../map-legend/map-legend';
-import { MapService } from '../map-service';
+import { MapService } from '../../services/map-service';
 
 @Component({
   selector: 'app-gpx-map',

@@ -40,6 +40,7 @@ body {
     --gpx-blue: #1D8EA5;
     --gpx-light-blue: #3794A2;
     --gpx-black: #242424;
+    --gpx-white: #FAFAFA;
 
     --gpx-ol-font: 'MS Shell DLg \32';
 
@@ -48,6 +49,8 @@ body {
     --navbar-height: 42px;
 
     margin: 0;
+
+    --mat-button-toggle-background-color: var(--gpx-white)
 }
 
 /* properties for injected DOM from open layers */

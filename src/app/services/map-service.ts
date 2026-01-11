@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Feature, Map } from 'ol';
+import { Map } from 'ol';
 import { FeatureLike } from 'ol/Feature';
 import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';

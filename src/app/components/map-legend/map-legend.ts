@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { MapService } from '../map-service';
+import { MapService } from '../../services/map-service';
 
 @Component({
   selector: 'app-map-legend',

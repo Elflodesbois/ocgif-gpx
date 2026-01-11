@@ -1,11 +1,16 @@
 <div id="navbar-container">
-    <mat-button-toggle-group id="navbar-left" class="navbar-group" [hideSingleSelectionIndicator]="true">
+    <div id="navbar-left">
+        <p id="app-name">GPX App</p>
+        <img id="logo" src="logo.jpg" />
+    </div>
+    <div id="navbar-expander"></div>
+    <mat-button-toggle-group id="navbar-middle" class="navbar-group" [hideSingleSelectionIndicator]="true">
 
         <mat-button-toggle 
         value="traces"
         [checked]="mode.state() === 'traces'"
         (change)="mode.changeMode('traces')">
-            <mat-icon>timeline</mat-icon>Traces
+            <mat-icon>timeline</mat-icon>Traces (Dashboard ?)
         </mat-button-toggle>
 
         <mat-button-toggle 
@@ -23,16 +28,11 @@
         </mat-button-toggle>
 
     </mat-button-toggle-group>
-    <div id="navbar-middle">
-
-        <img id="logo" src="logo.jpg" />
-
-    </div>
+    
     <div id="navbar-right" class="navbar-group">
 
-        <button matButton (click)="mode.changeMode('login')">
-            <mat-icon>login</mat-icon>Login
-        </button>
+        <!-- si on veut mettre des trucs après le selecteur
+         de mode, on peut ici -->
 
     </div>
 </div>
