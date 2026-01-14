@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Navbar } from './navbar';
+import { GpxNavbar } from './gpx-navbar';
 
-describe('Navbar', () => {
-  let component: Navbar;
-  let fixture: ComponentFixture<Navbar>;
+describe('GpxNavbar', () => {
+  let component: GpxNavbar;
+  let fixture: ComponentFixture<GpxNavbar>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Navbar]
+      imports: [GpxNavbar]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Navbar);
+    fixture = TestBed.createComponent(GpxNavbar);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

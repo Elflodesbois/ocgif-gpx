@@ -20,7 +20,9 @@
     <div>
       <label>Niveau</label>
       <select [(ngModel)]="niveau" name="niveau" required>
-        <option *ngFor="let n of niveaux" [value]="n">{{ n }}</option>
+        @for (n of niveaux; track $index) {
+          <option [value]="n">{{n}}</option>
+        }
       </select>
     </div>
 
@@ -42,5 +44,8 @@
     <button type="submit">Envoyer</button>
   </form>
 
-  <p *ngIf="message" style="margin-top: 15px; font-weight: bold; color: green;">{{ message }}</p>
+  @if (message) {
+    <p style="margin-top: 15px; font-weight: bold; color: green;">{{ message }}</p>
+  }
+  
 </main>

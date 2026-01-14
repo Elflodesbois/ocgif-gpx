@@ -21,18 +21,23 @@
          placeholder="Tapez un mot et Entrée">
 
   <div style="margin-top:5px;">
-    <span *ngFor="let k of keywords"
-          style="display:inline-block; padding:3px 8px; margin:2px; background:#ff6600; color:white; border-radius:12px;">
+    @for (k of keywords; track $index) {
+        <span style="display:inline-block; padding:3px 8px; margin:2px; background:#ff6600; color:white; border-radius:12px;">
       {{k}} <span style="cursor:pointer;" (click)="removeKeyword(k)">×</span>
     </span>
+    }
+    
   </div>
 
   <br><br>
 
   <div>
-    <label *ngFor="let n of niveaux">
-      <input type="checkbox" (change)="toggleNiveau(n)"> {{ n }}
-    </label>
+    @for (n of niveaux; track $index) {
+        <label>
+            <input type="checkbox" (change)="toggleNiveau(n)"> {{ n }}
+        </label>
+    }
+    
   </div>
 </fieldset>
 
@@ -52,18 +57,21 @@
   </thead>
 
   <tbody>
-    <tr *ngFor="let t of filtered">
-      <td>{{ t.nom }}</td>
-      <td>{{ t.description }}</td>
-      <td>{{ t.niveau }}</td>
-      <td>{{ t.distance_km }}</td>
-      <td>{{ t.denivele }}</td>
-      <td>{{ t.date_parcours }}</td>
-      <td>
-        <button (click)="download(t)">Télécharger</button>
-      </td>
-      <td [style.background]="t.difficulte?.normal" [title]="t.difficulte?.niveauNormal"></td>
-      <td [style.background]="t.difficulte?.difficile" [title]="t.difficulte?.niveauDifficile"></td>
-    </tr>
+    @for (t of filtered; track $index) {
+        <tr>
+        <td>{{ t.nom }}</td>
+        <td>{{ t.description }}</td>
+        <td>{{ t.niveau }}</td>
+        <td>{{ t.distance_km }}</td>
+        <td>{{ t.denivele }}</td>
+        <td>{{ t.date_parcours }}</td>
+        <td>
+            <button (click)="download(t)">Télécharger</button>
+        </td>
+        <td [style.background]="t.difficulte?.normal" [title]="t.difficulte?.niveauNormal"></td>
+        <td [style.background]="t.difficulte?.difficile" [title]="t.difficulte?.niveauDifficile"></td>
+        </tr>
+    }
+    
   </tbody>
 </table>

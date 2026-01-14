@@ -1,0 +1,14 @@
+<div id="ol-map" class="map-container">
+    <div id="fullscreen-button" class="ol-unselectable ol-control ol-fullscreen" style="pointer-events: auto;">
+        <app-toggle-state-button
+            [state] = "isFullscreen() ? 1 : 0"
+            [symbolOn] = "'&#9938;'"
+            [symbolOff] = "'&#x26F6;'"
+            (turnOn) = enterFullscreen()
+            (turnOff) = exitFullscreen()
+        ></app-toggle-state-button>
+    </div>
+    <div id="legend-container" class="ol-unselectable ol-control ol-legend" style="pointer-events: auto;">
+        <app-map-legend></app-map-legend>
+    </div>
+</div>

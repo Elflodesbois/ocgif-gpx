@@ -1,7 +1,10 @@
 <h2>Mes traces</h2>
 <ul>
-  <li *ngFor="let t of traces">
-    {{ t.nom }} - {{ t.niveau }} - {{ t.distance_km }} km
-    <button (click)="deleteTrace(t.id)">Supprimer</button>
-  </li>
+    @for (t of traces; track $index) {
+        <li>
+            {{ t.nom }} - {{ t.niveau }} - {{ t.distance_km }} km
+            <button (click)="deleteTrace(t.id)">Supprimer</button>
+        </li>
+    }
+  
 </ul>
