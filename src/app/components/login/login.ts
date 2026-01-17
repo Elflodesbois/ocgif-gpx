@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Auth } from '../../services/auth';
-import { Router, RouterLink  } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { NavbarModeSelector } from '../../services/navbar-mode-selector';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule],
   templateUrl: './login.html',
   styleUrl: './login.scss'
 })
@@ -14,6 +15,8 @@ export class Login {
   username = '';
   password = '';
   error = '';
+
+  mode = inject(NavbarModeSelector);
 
   constructor(private auth: Auth, private router: Router) {}
 

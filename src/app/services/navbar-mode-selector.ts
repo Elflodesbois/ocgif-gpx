@@ -18,4 +18,5 @@ export type NavbarMode =
   	| 'login'
   	| 'upload'
   	| 'liste'
+    | 'register'
 	;

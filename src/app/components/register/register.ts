@@ -1,17 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Auth } from '../../services/auth';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { NavbarModeSelector } from '../../services/navbar-mode-selector';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule],
   templateUrl: './register.html',
   styleUrl: './register.scss'
 })
 export class Register {
+  mode = inject(NavbarModeSelector);
  
   username = '';
   password = '';
@@ -26,7 +28,7 @@ export class Register {
     this.auth.register(this.username, this.password).subscribe({
       next: () => {
         alert('Compte créé avec succès');
-        this.router.navigate(['/login']);
+        this.mode.changeMode('login');
       },
       error: err => {
         this.error = err.error?.error || 'Erreur création compte';

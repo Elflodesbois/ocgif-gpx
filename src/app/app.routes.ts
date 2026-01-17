@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { Login } from './components/login/login';
-import { Register } from './pages/register/register';
+import { Register } from './components/register/register';
 import { authGuard } from './guards/auth-guard';
 import { MesTraces } from './pages/mes-traces/mes-traces';
 import { AjoutGpx } from './pages/ajout-gpx/ajout-gpx';

@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
 import { MatIcon } from '@angular/material/icon';
 import { NavbarModeSelector } from '../../services/navbar-mode-selector';
+import { Auth } from '../../services/auth';
 
 @Component({
   selector: 'app-gpx-navbar',
@@ -11,4 +12,5 @@ import { NavbarModeSelector } from '../../services/navbar-mode-selector';
 })
 export class GpxNavbar {
     mode = inject(NavbarModeSelector);
+    logInfo = inject(Auth);
 }

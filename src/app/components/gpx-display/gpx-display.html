@@ -13,6 +13,10 @@
             <app-login></app-login>
         }
 
+        @case ('register') {
+            <app-register></app-register>
+        }
+        
         @case ('upload') {
             <app-upload-gpx></app-upload-gpx>
         }
@@ -20,6 +24,7 @@
         @case ('liste') {
             <app-list-gpx></app-list-gpx>
         }
+
 
         @default {
             <p>ERREUR! Chloé, si tu vois ça, c'est que tu n'as pas mis <br />
