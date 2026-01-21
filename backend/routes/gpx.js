@@ -79,6 +79,19 @@ module.exports = function(pool) {
         }
     });
 
+    router.get('/niveau', async (req, res) => {
+        try {
+            const result = await pool.query(`
+            SELECT UNNEST(enum_range(NULL::niveau_groupe)) AS niveaux
+            `);
+
+            res.json(result.rows);
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Erreur récupération Niveau' });
+        }
+    });
+
     // 🔹 Voir toutes ses traces
     router.get('/mes-traces', authMiddleware, async (req, res) => {
         try {
