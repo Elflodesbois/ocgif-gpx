@@ -36,6 +36,13 @@
 
         <!-- si on veut mettre des trucs après le selecteur
          de mode, on peut ici -->
+        @if (logInfo.isLoggedIn()) {
+            <button matButton
+                (click)="logout()"
+            >
+                <mat-icon>logout</mat-icon>Se déconnecter
+            </button>
+        }
 
     </div>
 </div>

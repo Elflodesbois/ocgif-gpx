@@ -23,7 +23,7 @@ export class Login {
   login() {
     this.auth.login(this.username, this.password).subscribe({
       next: res => {
-        this.router.navigate(['/dashboard']);
+        this.mode.changeMode('traces');
       },
       error: err => {
         this.error = err.error.error || 'Erreur connexion';
