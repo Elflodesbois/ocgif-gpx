@@ -5,6 +5,8 @@
             {{ t.nom }} - {{ t.niveau }} - {{ t.distance_km }} km
             <button (click)="deleteTrace(t.id)">Supprimer</button>
         </li>
+    } @empty {
+        <p>Vous n'avez pas encore importé de trace.</p>
     }
   
 </ul>
