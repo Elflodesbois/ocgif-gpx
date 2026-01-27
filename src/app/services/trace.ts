@@ -16,4 +16,9 @@ export class Trace {
   deleteTrace(id: number) {
      return this.http.delete(`${this.baseUrl}/mes-traces/${id}`);
   }
+
+  getNiveau() {
+    return this.http.get<any[]>(`${this.baseUrl}/niveau`);
+  }
+  
 }
