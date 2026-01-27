@@ -5,7 +5,7 @@ import { Injectable, WritableSignal, signal } from '@angular/core';
 })
 export class NavbarModeSelector {
     
-  	public state: WritableSignal<NavbarMode> = signal('upload');
+  	public state: WritableSignal<NavbarMode> = signal('traces');
 
     public changeMode(newMode: NavbarMode) {
         this.state.set(newMode);

@@ -6,10 +6,11 @@ import { Login } from '../login/login';
 import { ListGpx } from "../list-gpx/list-gpx";
 import { UploadGpx } from "../upload-gpx/upload-gpx";
 import { Register } from "../register/register";
+import { MesTraces } from "../mes-traces/mes-traces";
 
 @Component({
   selector: 'app-gpx-display',
-  imports: [GpxMap, GpxNavbar, Login, ListGpx, UploadGpx, Register],
+  imports: [GpxMap, GpxNavbar, Login, ListGpx, UploadGpx, Register, MesTraces],
   templateUrl: './gpx-display.html',
   styleUrl: './gpx-display.scss'
 })
