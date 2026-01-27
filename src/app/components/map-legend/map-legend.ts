@@ -9,14 +9,4 @@ import { MapService } from '../../services/map-service';
 })
 export class MapLegend {
     mapWrapper = inject(MapService)
-    n = 0;
-
-    addgrandtour() {
-        const layer = this.mapWrapper.vectorizeGpxFile('grand_tour.gpx');
-        this.mapWrapper.addLayer('name'+this.n++, layer);
-    }
-
-    rmgrandtour(name: string) {
-        this.mapWrapper.removeLayer(name);
-    }
 }
