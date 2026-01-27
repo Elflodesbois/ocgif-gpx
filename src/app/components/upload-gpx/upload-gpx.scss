@@ -1,0 +1,18 @@
+#gpx-upload-form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2vh;
+}
+
+#form-file-upload {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    width: 100%;
+}
+
+#form-separator {
+    flex-grow: 0.67;
+}
