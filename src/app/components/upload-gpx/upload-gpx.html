@@ -1,51 +1,63 @@
-<main>
-  <h1>Ajouter une trace GPX</h1>
+<h1>Ajouter une trace GPX</h1>
 
-  <form (ngSubmit)="envoyer()">
-    <div>
-      <label>Fichier GPX</label>
-      <input type="file" accept=".gpx" (change)="onFileSelected($event)" required>
+@if (message) {
+    <p>{{message}}</p>
+}
+
+<div id="gpx-upload-form">
+
+    <div id="form-file-upload-layout">
+        <div id="form-file-upload">
+            <mat-label>Fichier GPX</mat-label>
+            <div id="form-separator"></div>
+            <button matButton
+                (click)="gpxInput.click()"
+            >
+                <mat-icon>upload</mat-icon>Télécharger
+            </button>
+            <input [(ngModel)]="fichier" #gpxInput accept=".gpx" type="file" (change)="onFileSelected($event)" required hidden />
+        </div>
+        <p>Fichier sélectionné: {{gpxInput.value ? gpxInput.value.split('\\').slice(-1)[0] : 'aucun'}}</p>
     </div>
+    
 
-    <div>
-      <label>Nom</label>
-      <input type="text" [(ngModel)]="nom" name="nom" required>
-    </div>
+    <mat-form-field>
+        <mat-label>Nom</mat-label>
+        <input matInput [(ngModel)]="nom" [name]="nom" placeholder="Trace 1" required />
+    </mat-form-field>
 
-    <div>
-      <label>Description</label>
-      <textarea [(ngModel)]="description" name="description"></textarea>
-    </div>
+    <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea matInput [(ngModel)]="description" [name]="description" placeholder="Cette trace passe par..." required></textarea>
+    </mat-form-field>
 
-    <div>
-      <label>Niveau</label>
-      <select [(ngModel)]="niveau" name="niveau" required>
-        @for (n of niveaux; track $index) {
-          <option [value]="n">{{n}}</option>
-        }
-      </select>
-    </div>
+    <mat-form-field>
+        <mat-label>Niveau</mat-label>
+        <mat-select [(ngModel)]="niveau">
+            @for (nv of niveaux; track $index) {
+                <mat-option value="{{nv}}" required>{{nv}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
 
-    <div>
-      <label>Distance (km)</label>
-      <input type="number" [(ngModel)]="distance_km" name="distance_km">
-    </div>
+    <mat-form-field>
+        <mat-label>Distance (km)</mat-label>
+        <input matInput [(ngModel)]="distance_km" type="number" min="0" max="999999" step="0.01" />
+    </mat-form-field>
 
-    <div>
-      <label>Dénivelé (m)</label>
-      <input type="number" [(ngModel)]="denivele" name="denivele">
-    </div>
+    <mat-form-field>
+        <mat-label>Dénivelé (m)</mat-label>
+        <input matInput [(ngModel)]="denivele" type="number" min="0" step="1" />
+    </mat-form-field>
 
-    <div>
-      <label>Date du parcours</label>
-      <input type="date" [(ngModel)]="date_parcours" name="date_parcours">
-    </div>
+    <mat-form-field>
+        <mat-label>Date du parcours</mat-label>
+        <input [(ngModel)]="date_parcours" matInput [matDatepicker]="picker">
+        <mat-hint>JJ/MM/AAAA</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
 
-    <button type="submit">Envoyer</button>
-  </form>
+    <button matButton (click)="envoyer()">Téléverser</button>
 
-  @if (message) {
-    <p style="margin-top: 15px; font-weight: bold; color: green;">{{ message }}</p>
-  }
-  
-</main>
+</div>

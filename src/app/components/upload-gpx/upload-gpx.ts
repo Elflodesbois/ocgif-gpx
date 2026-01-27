@@ -1,23 +1,51 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GpxService } from '../../services/gpx.service';
-import { CommonModule, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormField, MatLabel, MatHint, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from "@angular/material/icon";
+import { MatOption, MatSelect } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-upload-gpx',
-  imports: [FormsModule,CommonModule],
   standalone: true,
   templateUrl: './upload-gpx.html',
-  styleUrls: ['./upload-gpx.scss']
+  styleUrls: ['./upload-gpx.scss'],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatFormField,
+    MatInput,
+    MatButton,
+    MatIcon,
+    MatSelect,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatLabel,
+    MatOption,
+    MatHint,
+    MatSuffix
+],
+  providers: [
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: { appearance: 'outline' }
+    }
+  ]
 })
 export class UploadGpx {
+
   
   nom = '';
   description = '';
   niveau = '';
   distance_km!: number;
   denivele!: number;
-  date_parcours!: string;
+  date_parcours!: Date | null;
   fichier!: File;  // contiendra le fichier GPX sélectionné
 
   message = '';  // message de retour
@@ -88,14 +116,15 @@ analyserGPX(file: File) {
 
       const timeTag = xml.getElementsByTagName('time')[0];
       if (timeTag) {
-        this.date_parcours = timeTag.textContent!.split('T')[0];
+        console.log(new Date(Date.parse(timeTag.textContent!.split('T')[0])));
+        this.date_parcours = new Date(Date.parse(timeTag.textContent!.split('T')[0]));
       }
     };
     reader.readAsText(file);
   }
 
   envoyer() {
-    if (!this.nom || !this.niveau || !this.fichier) {
+    if (!this.nom || !this.description || !this.niveau || !this.fichier) {
       this.message = 'Champs obligatoires manquants';
       return;
     }
@@ -106,7 +135,7 @@ analyserGPX(file: File) {
     formData.append('niveau', this.niveau);
     formData.append('distance_km', this.distance_km.toString());
     formData.append('denivele', this.denivele.toString());
-    formData.append('date_parcours', this.date_parcours);
+    formData.append('date_parcours', (this.date_parcours? this.date_parcours.toString() : ':'));
     formData.append('file', this.fichier);
 
     this.gpxService.uploadTrace(formData).subscribe({
@@ -119,7 +148,7 @@ analyserGPX(file: File) {
         this.message = '';
       }, 10000);
     },
-      error: () => this.message = 'Erreur lors de l’envoi '
+      error: () => this.message = 'Erreur lors de l\'envoi'
     });
   }
 
@@ -129,7 +158,7 @@ analyserGPX(file: File) {
     this.niveau = '';
     this.distance_km = undefined!;
     this.denivele = undefined!;
-    this.date_parcours = '';
+    this.date_parcours = null;
     this.fichier = undefined!;
   }
 
