@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef  } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GpxService } from '../../services/gpx.service';
 import { CommonModule } from '@angular/common';
@@ -9,6 +9,7 @@ import { MatIcon } from "@angular/material/icon";
 import { MatOption, MatSelect } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+
 
 @Component({
   selector: 'app-upload-gpx',
@@ -39,6 +40,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 })
 export class UploadGpx {
 
+  // 🔹 RÉFÉRENCE À L’INPUT FILE (OBLIGATOIRE POUR RESET)
+  @ViewChild('gpxInput') gpxInput!: ElementRef<HTMLInputElement>;
   
   nom = '';
   description = '';
@@ -66,12 +69,15 @@ export class UploadGpx {
   constructor(private gpxService: GpxService) {}
 
   // Quand l'utilisateur choisit un fichier
-  onFileSelected(event: any) {
-    this.fichier = event.target.files[0];
-    if (this.fichier) {
-      this.analyserGPX(this.fichier);
-    }
+  onFileSelected(event: Event) {
+  const input = event.target as HTMLInputElement;
+
+  if (input.files && input.files.length > 0) {
+    this.fichier = input.files[0];
+    this.analyserGPX(this.fichier);
   }
+}
+
 analyserGPX(file: File) {
     const reader = new FileReader();
     reader.onload = (e: any) => {
@@ -135,7 +141,7 @@ analyserGPX(file: File) {
     formData.append('niveau', this.niveau);
     formData.append('distance_km', this.distance_km.toString());
     formData.append('denivele', this.denivele.toString());
-    formData.append('date_parcours', (this.date_parcours? this.date_parcours.toString() : ':'));
+    formData.append('date_parcours', (this.date_parcours? this.date_parcours.toISOString().split('T')[0]: ''));
     formData.append('file', this.fichier);
 
     this.gpxService.uploadTrace(formData).subscribe({
@@ -160,6 +166,10 @@ analyserGPX(file: File) {
     this.denivele = undefined!;
     this.date_parcours = null;
     this.fichier = undefined!;
+
+    if (this.gpxInput) {
+      this.gpxInput.nativeElement.value = '';
+    }
   }
 
 

@@ -15,7 +15,15 @@
             >
                 <mat-icon>upload</mat-icon>Télécharger
             </button>
-            <input [(ngModel)]="fichier" #gpxInput accept=".gpx" type="file" (change)="onFileSelected($event)" required hidden />
+            <input
+              #gpxInput
+              accept=".gpx"
+              type="file"
+              (change)="onFileSelected($event)"
+              required
+              hidden
+            />
+
         </div>
         <p>Fichier sélectionné: {{gpxInput.value ? gpxInput.value.split('\\').slice(-1)[0] : 'aucun'}}</p>
     </div>
