@@ -65,7 +65,12 @@ body {
 
 #ol-map .ol-control.ol-fullscreen {
     right: .5em;
-    bottom: 1.2em;
+    bottom: 2em;
+}
+
+#ol-map .ol-control button {
+    width: 24px;
+    height: 24px;
 }
 
 #ol-map .ol-control.ol-legend {

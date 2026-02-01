@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GpxService } from '../../services/gpx.service';
 import { Trace } from '../../models/trace.model';
 import { Difficulty  } from '../../services/difficulty.service';
-import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatCheckboxChange, MatCheckboxModule } from "@angular/material/checkbox";
+import { MapService } from '../../services/map-service';
 
 
 
@@ -17,7 +18,7 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 })
 export class ListGpx implements OnInit {
     
-    
+    mapWrapper = inject(MapService);
     
     traces: Trace[] = [];
     filtered: Trace[] = [];
@@ -193,7 +194,24 @@ export class ListGpx implements OnInit {
         return this.currentSortDirection ? '↑' : '↓';
     }
     
-    handleSelectionStatus(trace: any) {
+    handleSelectionStatus(event: MatCheckboxChange, trace: any) {
+        console.log(trace);
+
+        let layerName = trace.nom;
+
+        if (event.checked) {
+            if (!this.mapWrapper.checkLayerPresenceByName(layerName)) {
+                this.gpxService.downloadTrace(trace.id).subscribe(load => {
+                    load.text().then(value => {
+                        this.mapWrapper.addLayer(layerName, this.mapWrapper.vectorizeGpxText(value));
+                    });
+                });
+            }
+        } else {
+            // pas besoin de vérifier la présence
+            this.mapWrapper.removeLayer(layerName);
+        }
+        
         
     }
     

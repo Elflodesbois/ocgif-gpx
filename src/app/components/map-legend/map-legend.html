@@ -2,7 +2,11 @@
     @for (layerName of mapWrapper.getLayers(); track $index) {
         <tr>
             <td>{{layerName}}</td>
-            <td><button class="square-btn" (click)="mapWrapper.removeLayer(layerName)">🗑</button></td>
+            <td>
+                <button mat-icon-button class="visibility-btn" (click)="mapWrapper.toggleVisibility(layerName)">
+                    <mat-icon>{{mapWrapper.getVisibilityOf(layerName) ? "visibility" : "visibility_off"}}</mat-icon>
+                </button>
+            </td>
         </tr>
     } @empty {
         <thead>

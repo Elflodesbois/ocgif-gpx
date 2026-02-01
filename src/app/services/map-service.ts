@@ -21,7 +21,7 @@ import { Control } from 'ol/control';
 })
 export class MapService {
     public map!: Map;
-    private layers!: { [key: string]: VectorLayer };
+    private layers!: { [key: string]: LayerInfo };
     private geometryStyles: { [key: string]: Style|Style[] } = {
         'Point': new Style({
             image: new CircleStyle({
@@ -98,14 +98,15 @@ export class MapService {
     }
 
     addLayer(name: string, layer: VectorLayer) {
-        this.layers[name] = layer;
+        let info = new LayerInfo(name, layer);
+        this.layers[name] = info;
         this.map.addLayer(layer);
     }
 
     removeLayer(name: string) {
         for (let key in this.layers) {
             if (key === name) {
-                this.map.removeLayer(this.layers[name]);
+                this.map.removeLayer(this.layers[name].layer);
                 delete this.layers[name];
                 console.log(this.layers);
                 return;
@@ -125,5 +126,48 @@ export class MapService {
             }),
             style: this.geometryToStyle
         });
+    }
+
+    vectorizeGpxText(text: string): VectorLayer {
+        let format = new GPX();
+
+        let features = format.readFeatures(text, {featureProjection: 'EPSG:3857'});
+
+        return new VectorLayer({
+            source: new VectorSource({
+                features
+            }),
+            style: this.geometryToStyle
+        });
+    }
+
+    checkLayerPresenceByName(name: string): boolean {
+        return this.getLayers().includes(name);
+    }
+
+    toggleVisibility(name: string) {
+        this.layers[name].visible = this.layers[name].visible ? false : true;
+
+        if (this.layers[name].visible) {
+            this.map.addLayer(this.layers[name].layer)
+        } else {
+            this.map.removeLayer(this.layers[name].layer);
+        }
+    }
+
+    getVisibilityOf(name: string): boolean {
+        return this.layers[name].visible;
+    }
+}
+
+export class LayerInfo {
+    public name: string;
+    public layer: VectorLayer;
+    public visible: boolean = true;
+
+    constructor(name: string, layer: VectorLayer, visible: boolean = true) {
+        this.name = name;
+        this.layer = layer;
+        this.visible = visible;
     }
 }
