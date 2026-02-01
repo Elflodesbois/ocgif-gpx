@@ -9,7 +9,10 @@
   flex-wrap: wrap; /* permet de passer à la ligne si pas assez de place */
   gap: 16px;       /* espace entre les cartes */
   padding: 16px;
-  justify-content: flex-start; /* commence à gauche */
+  justify-content: center; 
+  
+  position: relative; /* nécessaire pour que z-index fonctionne */
+  z-index: 1;         /* plus petit que la navbar */
 }
 
 .flip-wrapper {
