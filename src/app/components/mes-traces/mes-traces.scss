@@ -1,3 +1,9 @@
+.title {
+  margin-left: 16px;
+  margin-right: 16px;
+  margin-bottom: 8px; /* petit espace avant les cartes */
+}
+
 .traces-container {
   display: flex;
   flex-wrap: wrap; /* permet de passer à la ligne si pas assez de place */
