@@ -126,4 +126,6 @@ export class MapService {
             style: this.geometryToStyle
         });
     }
+
+    
 }

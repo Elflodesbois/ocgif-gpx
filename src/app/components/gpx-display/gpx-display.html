@@ -3,6 +3,7 @@
     @switch (mode.state()) {
         @case ('traces') {
             <div id="gpx-display-left">
+                <app-list-gpx></app-list-gpx>
             </div>
             <div id="gpx-display-right">
                 <app-gpx-map></app-gpx-map>
@@ -22,7 +23,8 @@
         }
 
         @case ('liste') {
-            <app-list-gpx></app-list-gpx>
+            <app-mes-traces></app-mes-traces>
+            
         }
 
 
