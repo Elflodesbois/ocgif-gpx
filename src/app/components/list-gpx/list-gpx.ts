@@ -212,7 +212,6 @@ export class ListGpx implements OnInit {
             this.mapWrapper.removeLayer(layerName);
         }
         
-        
     }
     
 }
