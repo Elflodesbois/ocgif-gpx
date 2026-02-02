@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Map } from 'ol';
 import { FeatureLike } from 'ol/Feature';
 import View from 'ol/View';
@@ -15,52 +15,69 @@ import CircleStyle from 'ol/style/Circle.js';
 import { defaults as interactionDefaults } from 'ol/interaction/defaults';
 import { defaults as controlDefaults } from 'ol/control/defaults';
 import { Control } from 'ol/control';
+import { Colours } from './colours';
 
 @Injectable({
     providedIn: 'root'
 })
 export class MapService {
+    private coloursProvider = inject(Colours);
     public map!: Map;
     private layers!: { [key: string]: LayerInfo };
-    private geometryStyles: { [key: string]: Style|Style[] } = {
-        'Point': new Style({
-            image: new CircleStyle({
-                fill: new Fill({
-                    color: 'rgba(255,255,0,0.4)',
-                }),
-                radius: 5,
-                stroke: new Stroke({
-                    color: '#ff0',
-                    width: 1,
-                }),
-            }),
-        }),
-        'LineString': new Style({
-            stroke: new Stroke({
-                color: '#0ff',
-                width: 3,
-            }),
-        }),
-        'MultiLineString': [
-            new Style({
-                stroke: new Stroke({
-                    color: '#000',
-                    width: 5,   
+
+    private geometryStylesProvider(): { [key: string]: Style|Style[] } {
+        const customRgb = this.coloursProvider.getSafeRgb();
+        
+        return {
+            'Point': new Style({
+                image: new CircleStyle({
+                    fill: new Fill({
+                        color: 'rgba(255,255,0,0.4)'
+                    }),
+                    radius: 5,
+                    stroke: new Stroke({
+                        color: '#ff0',
+                        width: 1,
+                    }),
                 }),
             }),
-            new Style({
+            'LineString': new Style({
                 stroke: new Stroke({
-                    color: '#f00',
+                    color: '#0ff',
                     width: 3,
                 }),
             }),
-        ]
-    };
-
-    private geometryToStyle = (feature: FeatureLike): Style | Style[] | undefined => {
-        const type = feature.getGeometry()?.getType();
-        return type && this.geometryStyles[type] ? this.geometryStyles[type] : undefined;
+            'MultiLineString': [
+                new Style({
+                    stroke: new Stroke({
+                        color: '#000',
+                        width: 5,   
+                    }),
+                }),
+                new Style({
+                    stroke: new Stroke({
+                        color: customRgb,
+                        width: 3,
+                    }),
+                }),
+            ]
+        };
     }
+
+    /*private geometryToStyle = (feature: FeatureLike): Style | Style[] | undefined => {
+        const type = feature.getGeometry()?.getType();
+        const geometryStyles = this.geometryStylesProvider();
+        return type && geometryStyles[type] ? geometryStyles[type] : undefined;
+    }*/
+
+    //                                      record est équivalent à { [key: string]: ...}
+    private geometryToStyle(geometryStyles: Record<string, Style | Style[]>): (feature: FeatureLike) => Style | Style[] | undefined {
+    return (feature: FeatureLike) => {
+        const type = feature.getGeometry()?.getType();
+        return type ? geometryStyles[type] : undefined;
+    };
+}
+
 
     initMap(): void {
         let fullscreenButtonContainer = document.getElementById("fullscreen-button");
@@ -119,12 +136,14 @@ export class MapService {
     }
 
     vectorizeGpxFile(filepath: string) : VectorLayer {
+        const geometryToStyleFunc = this.geometryToStyle(this.geometryStylesProvider());
+        
         return new VectorLayer({
             source: new VectorSource({
                 url: filepath,
                 format: new GPX()
             }),
-            style: this.geometryToStyle
+            style: geometryToStyleFunc
         });
     }
 
@@ -133,11 +152,13 @@ export class MapService {
 
         let features = format.readFeatures(text, {featureProjection: 'EPSG:3857'});
 
+        const geometryToStyleFunc = this.geometryToStyle(this.geometryStylesProvider());
+        
         return new VectorLayer({
             source: new VectorSource({
                 features
             }),
-            style: this.geometryToStyle
+            style: geometryToStyleFunc
         });
     }
 
