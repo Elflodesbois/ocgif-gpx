@@ -63,7 +63,8 @@ export class Colours {
 
     private checkHslComponents(h: number, s: number, l: number): boolean {
         // si c'est trop proche du noir
-        if (l < 0.1) return false;
+        console.log(l);
+        if (l < 0.35) return false;
 
         for (const range of this.forbiddenRanges) {
             if (range.value-range.radius < h && h < range.value+range.radius) {
