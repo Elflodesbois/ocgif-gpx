@@ -30,8 +30,8 @@ export class Colours {
         },
         {
             // bleu
-            value: 240,
-            radius: 0
+            value: 220,
+            radius: 50
         },
         {
             // orange clair
