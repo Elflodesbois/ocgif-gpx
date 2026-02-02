@@ -1,18 +1,62 @@
-#gpx-upload-form {
-    display: flex;
-    flex-direction: column;
-    row-gap: 2vh;
+/* Reset global */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
-#form-file-upload {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
+/* Container principal */
+#gpx-upload-form {
+  display: grid;
+  grid-template-columns: 1fr; /* 1 colonne par défaut */
+  gap: 8px; /* espace interne réduit */
+  margin: 0; /* pas de marge externe */
+  padding: 16px; /* padding interne pour respirer */
+  width: 100vw;
+  box-sizing: border-box;
+}
 
-    width: 100%;
+/* Tous les champs Material prennent tout l’espace */
+.field, .mat-form-field {
+  width: 100% !important;
+  min-width: 0; /* permet de rétrécir si besoin */
+}
+
+/* Nom et description pleine largeur */
+.nom, .description {
+  grid-column: 1 / -1; /* pleine largeur même en 2 colonnes */
+}
+
+/* Upload + bouton pleine largeur */
+.full-width {
+  grid-column: 1 / -1;
+}
+
+/* Upload fichier layout */
+#form-file-upload {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
 }
 
 #form-separator {
-    flex-grow: 0.67;
+  flex: 1;
+}
+
+/* Responsive : 2 colonnes >= 620px */
+@media (min-width: 620px) {
+  #gpx-upload-form {
+    grid-template-columns: repeat(2, 1fr); /* 2 colonnes égales */
+  }
+
+  /* Tous les champs sauf nom/description prennent une colonne */
+  .field:not(.nom):not(.description) {
+    grid-column: auto; /* chaque champ prend sa colonne */
+  }
+
+  /* Nom et description restent pleine largeur */
+  .nom, .description {
+    grid-column: 1 / -1;
+  }
 }

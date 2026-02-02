@@ -1,71 +1,86 @@
-<h1>Ajouter une trace GPX</h1>
+<h1 style="margin:16px 16px 8px 16px;">Ajouter une trace GPX</h1>
 
 @if (message) {
-    <p>{{message}}</p>
+  <p style="margin:0 16px;">{{ message }}</p>
 }
 
 <div id="gpx-upload-form">
 
-    <div id="form-file-upload-layout">
-        <div id="form-file-upload">
-            <mat-label>Fichier GPX</mat-label>
-            <div id="form-separator"></div>
-            <button matButton
-                (click)="gpxInput.click()"
-            >
-                <mat-icon>upload</mat-icon>Télécharger
-            </button>
-            <input
-              #gpxInput
-              accept=".gpx"
-              type="file"
-              (change)="onFileSelected($event)"
-              required
-              hidden
-            />
-
-        </div>
-        <p>Fichier sélectionné: {{gpxInput.value ? gpxInput.value.split('\\').slice(-1)[0] : 'aucun'}}</p>
+  <!-- Upload fichier -->
+  <div id="form-file-upload-layout" class="full-width">
+    <div id="form-file-upload">
+      <mat-label>Fichier GPX</mat-label>
+      <div id="form-separator"></div>
+      <button matButton (click)="gpxInput.click()">
+        <mat-icon>upload</mat-icon>
+        Télécharger
+      </button>
+      <input
+        #gpxInput
+        type="file"
+        accept=".gpx"
+        hidden
+        required
+        (change)="onFileSelected($event)"
+      />
     </div>
-    
+    <p style="margin:0;">Fichier sélectionné :
+      {{ gpxInput.value ? gpxInput.value.split('\\').slice(-1)[0] : 'aucun' }}
+    </p>
+  </div>
 
-    <mat-form-field>
-        <mat-label>Nom</mat-label>
-        <input matInput [(ngModel)]="nom" [name]="nom" placeholder="Trace 1" required />
-    </mat-form-field>
+  <!-- Champ Nom pleine largeur -->
+  <mat-form-field class="field nom">
+    <mat-label>Nom</mat-label>
+    <input matInput [(ngModel)]="nom" placeholder="Trace 1" required />
+  </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>Description</mat-label>
-        <textarea matInput [(ngModel)]="description" [name]="description" placeholder="Cette trace passe par..." required></textarea>
-    </mat-form-field>
+  <!-- Champ Description prend 2 colonnes sur grand écran -->
+  <mat-form-field class="field description">
+    <mat-label>Description</mat-label>
+    <textarea
+      matInput
+      rows="3"
+      [(ngModel)]="description"
+      placeholder="Cette trace passe par..."
+      required
+    ></textarea>
+  </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>Niveau</mat-label>
-        <mat-select [(ngModel)]="niveau">
-            @for (nv of niveaux; track $index) {
-                <mat-option value="{{nv}}" required>{{nv}}</mat-option>
-            }
-        </mat-select>
-    </mat-form-field>
+  <!-- Niveau -->
+  <mat-form-field class="field">
+    <mat-label>Niveau</mat-label>
+    <mat-select [(ngModel)]="niveau" required>
+      @for (nv of niveaux; track $index) {
+        <mat-option [value]="nv">{{ nv }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>Distance (km)</mat-label>
-        <input matInput [(ngModel)]="distance_km" type="number" min="0" max="999999" step="0.01" />
-    </mat-form-field>
+  <!-- Distance -->
+  <mat-form-field class="field">
+    <mat-label>Distance (km)</mat-label>
+    <input matInput type="number" min="0" step="0.01" [(ngModel)]="distance_km" />
+  </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>Dénivelé (m)</mat-label>
-        <input matInput [(ngModel)]="denivele" type="number" min="0" step="1" />
-    </mat-form-field>
+  <!-- Dénivelé -->
+  <mat-form-field class="field">
+    <mat-label>Dénivelé (m)</mat-label>
+    <input matInput type="number" min="0" step="1" [(ngModel)]="denivele" />
+  </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>Date du parcours</mat-label>
-        <input [(ngModel)]="date_parcours" matInput [matDatepicker]="picker">
-        <mat-hint>JJ/MM/AAAA</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
+  <!-- Date du parcours -->
+  <mat-form-field class="field">
+    <mat-label>Date du parcours</mat-label>
+    <input matInput [(ngModel)]="date_parcours" [matDatepicker]="picker">
+    <mat-hint>JJ/MM/AAAA</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
 
-    <button matButton (click)="envoyer()">Téléverser</button>
+  <!-- Bouton envoyer -->
+  <button matButton class="full-width" (click)="envoyer()">
+    Téléverser
+  </button>
 
 </div>
