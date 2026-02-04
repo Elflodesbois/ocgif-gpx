@@ -58,7 +58,10 @@ export class Colours {
             return this.getSafeRgb();
         }
 
-        return '#' + r.toString(16) + g.toString(16) + b.toString(16)
+        return '#' + 
+        (r.toString(16).length < 2 ? '0' + r.toString(16) : r.toString(16)) + 
+        (g.toString(16).length < 2 ? '0' + g.toString(16) : g.toString(16)) + 
+        (b.toString(16).length < 2 ? '0' + b.toString(16) : b.toString(16));
     }
 
     private checkHslComponents(h: number, s: number, l: number): boolean {

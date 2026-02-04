@@ -27,6 +27,7 @@ export class MapService {
 
     private geometryStylesProvider(): { [key: string]: Style|Style[] } {
         const customRgb = this.coloursProvider.getSafeRgb();
+        console.log(customRgb);
         
         return {
             'Point': new Style({
