@@ -131,14 +131,15 @@ export class MapService {
 
         this.map.addOverlay(this.tooltipOverlay);
         this.map.on('pointermove', (event) => {
-            let feature = this.map.forEachFeatureAtPixel(event.pixel, f => f);
+            const { feature, layer } = this.map.forEachFeatureAtPixel(event.pixel, (feature, layer) => ({ feature, layer })) || {};
 
-            if (!feature) {
+
+            if (!feature || !layer) {
                 this.tooltipOverlay.setPosition(undefined);
                 return;
             }
 
-            let name = feature.get('name') || '!!! NOM MANQUANT !!!';
+            let name = layer.get('name') || '!!! NOM MANQUANT !!!';
             let tooltipText = document.getElementById('map-tooltip-text')!;
             tooltipText.innerText = name;
 
