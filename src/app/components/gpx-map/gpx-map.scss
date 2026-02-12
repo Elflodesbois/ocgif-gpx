@@ -3,3 +3,17 @@
     height: 100%;
     position: relative;
 }
+
+#map-tooltip {
+    position: absolute;
+    display: inline-block;
+    height: auto;
+    width: auto;
+    z-index: 1000; /*DOIT ETRE LE PLUS ELEVE !!!*/
+    background-color: var(--gpx-white);
+    color: var(--gpx-black);
+    border-radius: 5px;
+    padding: 5px;
+    visibility: hidden;
+    pointer-events: none;
+}

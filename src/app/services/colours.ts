@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class Colours {
+    private lastComputedColour?: string;
+
     /**
      * couleurs interdites pour les traces
      * il faut spécifier des valeurs HSL
@@ -58,10 +60,13 @@ export class Colours {
             return this.getSafeRgb();
         }
 
-        return '#' + 
+        let colour: string =  '#' + 
         (r.toString(16).length < 2 ? '0' + r.toString(16) : r.toString(16)) + 
         (g.toString(16).length < 2 ? '0' + g.toString(16) : g.toString(16)) + 
         (b.toString(16).length < 2 ? '0' + b.toString(16) : b.toString(16));
+
+        this.lastComputedColour = colour;
+        return colour;
     }
 
     private checkHslComponents(h: number, s: number, l: number): boolean {
@@ -94,5 +99,9 @@ export class Colours {
           /*max === b*/    60 * ((r-g)/(max-min)) + 240;
 
         return [t, s, v];
+    }
+
+    public getLastComputedColour(): string | undefined {
+        return this.lastComputedColour;
     }
 }

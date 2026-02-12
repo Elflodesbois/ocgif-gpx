@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Map } from 'ol';
+import { Map, Overlay } from 'ol';
 import { FeatureLike } from 'ol/Feature';
 import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
@@ -24,10 +24,13 @@ export class MapService {
     private coloursProvider = inject(Colours);
     public map!: Map;
     private layers!: { [key: string]: LayerInfo };
+    private tooltipOverlay!: Overlay;
+    private tooltip!: HTMLElement;
 
     private geometryStylesProvider(): { [key: string]: Style|Style[] } {
         const customRgb = this.coloursProvider.getSafeRgb();
-        console.log(customRgb);
+
+        const transparency = Number.MIN_VALUE;
         
         return {
             'Point': new Style({
@@ -61,15 +64,20 @@ export class MapService {
                         width: 3,
                     }),
                 }),
+                /* celui là est PRESQUE transparent, et sert juste à augmenter
+                 * la zone dans laquelle le tooltip se déclenche (ça ne marche pas si
+                 * la couleur est transparente)
+                 * j'ai mis 25 de largeur, mais si tu veux changer tu peux
+                 */
+                new Style({
+                    stroke: new Stroke({
+                        color: 'rgba(0, 0, 0, 0.01)',
+                        width: 25
+                    })
+                })
             ]
         };
     }
-
-    /*private geometryToStyle = (feature: FeatureLike): Style | Style[] | undefined => {
-        const type = feature.getGeometry()?.getType();
-        const geometryStyles = this.geometryStylesProvider();
-        return type && geometryStyles[type] ? geometryStyles[type] : undefined;
-    }*/
 
     //                                      record est équivalent à { [key: string]: ...}
     private geometryToStyle(geometryStyles: Record<string, Style | Style[]>): (feature: FeatureLike) => Style | Style[] | undefined {
@@ -83,6 +91,13 @@ export class MapService {
     initMap(): void {
         let fullscreenButtonContainer = document.getElementById("fullscreen-button");
         let legendContainer = document.getElementById("legend-container");
+        this.tooltip = document.getElementById("map-tooltip")!; // ! : assurance du dev que ce ne sera pas null
+        this.tooltipOverlay = new Overlay({
+            element: this.tooltip,
+            offset: [10, 0],
+            positioning: 'bottom-left',
+            stopEvent: false
+        });
 
         this.layers = {};
 
@@ -113,6 +128,24 @@ export class MapService {
 
             target: 'ol-map'
         });
+
+        this.map.addOverlay(this.tooltipOverlay);
+        this.map.on('pointermove', (event) => {
+            let feature = this.map.forEachFeatureAtPixel(event.pixel, f => f);
+
+            if (!feature) {
+                this.tooltipOverlay.setPosition(undefined);
+                return;
+            }
+
+            let name = feature.get('name') || '!!! NOM MANQUANT !!!';
+            let tooltipText = document.getElementById('map-tooltip-text')!;
+            tooltipText.innerText = name;
+
+            let coord = event.coordinate;
+            this.tooltipOverlay.setPosition(coord);
+            this.tooltip.style.visibility = 'visible';
+        })
     }
 
     addLayer(name: string, layer: VectorLayer) {
@@ -132,8 +165,12 @@ export class MapService {
         }
     }
 
-    getLayers(): Array<string> {
+    getLayersNames(): Array<string> {
         return Object.keys(this.layers);
+    }
+
+    getLayers(): { [key: string]: LayerInfo } {
+        return this.layers;
     }
 
     vectorizeGpxFile(filepath: string) : VectorLayer {
@@ -164,7 +201,7 @@ export class MapService {
     }
 
     checkLayerPresenceByName(name: string): boolean {
-        return this.getLayers().includes(name);
+        return this.getLayersNames().includes(name);
     }
 
     toggleVisibility(name: string) {
@@ -179,6 +216,14 @@ export class MapService {
 
     getVisibilityOf(name: string): boolean {
         return this.layers[name].visible;
+    }
+
+    getLayerColor(name: string): string {
+        let layer = this.layers[name].layer;
+
+        let ret = layer.get('color');
+
+        return ret;
     }
 }
 

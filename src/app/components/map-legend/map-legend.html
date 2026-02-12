@@ -1,6 +1,10 @@
 <table id="legend">
-    @for (layerName of mapWrapper.getLayers(); track $index) {
+    @for (layerName of mapWrapper.getLayersNames(); track $index) {
         <tr>
+            <td
+                class="colour-display"
+                [style.background-color]="mapWrapper.getLayerColor(layerName)"
+            ></td>
             <td>{{layerName}}</td>
             <td>
                 <button mat-icon-button class="visibility-btn" (click)="mapWrapper.toggleVisibility(layerName)">
@@ -10,10 +14,10 @@
         </tr>
     } @empty {
         <thead>
-            <td class="header-message" colspan="2">Légende</td>
+            <td class="header-message" colspan="3">Légende</td>
         </thead>
         <tr>
-            <td class="empty-message" colspan="2">Ajoutez des traces <br /> pour les gérer ici</td>
+            <td class="empty-message" colspan="3">Ajoutez des traces <br /> pour les gérer ici</td>
         </tr>
     }
 </table>

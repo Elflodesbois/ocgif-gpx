@@ -6,6 +6,7 @@ import { Trace } from '../../models/trace.model';
 import { Difficulty  } from '../../services/difficulty.service';
 import { MatCheckboxChange, MatCheckboxModule } from "@angular/material/checkbox";
 import { MapService } from '../../services/map-service';
+import { Colours } from '../../services/colours';
 
 
 
@@ -19,6 +20,7 @@ import { MapService } from '../../services/map-service';
 export class ListGpx implements OnInit {
     
     mapWrapper = inject(MapService);
+    colourService = inject(Colours);
     
     traces: Trace[] = [];
     filtered: Trace[] = [];
@@ -203,7 +205,10 @@ export class ListGpx implements OnInit {
             if (!this.mapWrapper.checkLayerPresenceByName(layerName)) {
                 this.gpxService.downloadTrace(trace.id).subscribe(load => {
                     load.text().then(value => {
-                        this.mapWrapper.addLayer(layerName, this.mapWrapper.vectorizeGpxText(value));
+                        let layer = this.mapWrapper.vectorizeGpxText(value);
+                        layer.set('name', layerName);
+                        layer.set('color', this.colourService.getLastComputedColour());
+                        this.mapWrapper.addLayer(layerName, layer);
                     });
                 });
             }
