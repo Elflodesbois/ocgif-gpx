@@ -19,4 +19,7 @@ export class GpxNavbar {
         this.logInfo.logout();
         this.mode.changeMode('login');
     }
+    login() {
+        this.mode.changeMode('login');
+    }
 }
