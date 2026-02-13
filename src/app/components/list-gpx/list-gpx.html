@@ -1,45 +1,91 @@
 <h1>Traces GPX enregistrées</h1>
 
-<fieldset>
-  <legend>Filtres</legend>
+<mat-card class="filter-card">
 
-  Distance :
-  <input type="number" [(ngModel)]="minDistance" (change)="applyFilters()"> -
-  <input type="number" [(ngModel)]="maxDistance" (change)="applyFilters()">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon>filter_list</mat-icon>
+      Filtres
+    </mat-card-title>
+  </mat-card-header>
 
-  <br><br>
+  <mat-card-content>
 
-  Dénivelé :
-  <input type="number" [(ngModel)]="minDenivele" (change)="applyFilters()"> -
-  <input type="number" [(ngModel)]="maxDenivele" (change)="applyFilters()">
+    <!-- Distance -->
+    <div class="filter-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Distance min (km)</mat-label>
+        <input matInput type="number"
+               [(ngModel)]="minDistance"
+               (change)="applyFilters()">
+      </mat-form-field>
 
-  <br><br>
+      <mat-form-field appearance="outline">
+        <mat-label>Distance max (km)</mat-label>
+        <input matInput type="number"
+               [(ngModel)]="maxDistance"
+               (change)="applyFilters()">
+      </mat-form-field>
+    </div>
 
-  Mots-clés :
-  <input type="text" [(ngModel)]="keywordsInput"
-         (keydown.enter)="addKeyword(); $event.preventDefault()"
-         placeholder="Tapez un mot et Entrée">
+    <!-- Dénivelé -->
+    <div class="filter-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Dénivelé min (m)</mat-label>
+        <input matInput type="number"
+               [(ngModel)]="minDenivele"
+               (change)="applyFilters()">
+      </mat-form-field>
 
-  <div style="margin-top:5px;">
-    @for (k of keywords; track $index) {
-        <span style="display:inline-block; padding:3px 8px; margin:2px; background:#ff6600; color:white; border-radius:12px;">
-      {{k}} <span style="cursor:pointer;" (click)="removeKeyword(k)">×</span>
-    </span>
-    }
-    
-  </div>
+      <mat-form-field appearance="outline">
+        <mat-label>Dénivelé max (m)</mat-label>
+        <input matInput type="number"
+               [(ngModel)]="maxDenivele"
+               (change)="applyFilters()">
+      </mat-form-field>
+    </div>
 
-  <br><br>
+    <mat-divider></mat-divider>
 
-  <div>
-    @for (n of niveaux; track $index) {
-        <label>
-            <input type="checkbox" (change)="toggleNiveau(n)"> {{ n }}
-        </label>
-    }
-    
-  </div>
-</fieldset>
+    <!-- Mots-clés -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Ajouter des mots-clés</mat-label>
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput
+             type="text"
+             [(ngModel)]="keywordsInput"
+             (keydown.enter)="addKeyword(); $event.preventDefault()"
+             placeholder="Tapez un mot et appuyez sur Entrée">
+    </mat-form-field>
+
+    <!-- Chips -->
+    <mat-chip-set>
+      @for (k of keywords; track $index) {
+        <mat-chip
+          removable="true"
+          (removed)="removeKeyword(k)">
+          {{ k }}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+      }
+    </mat-chip-set>
+
+    <mat-divider></mat-divider>
+
+    <!-- Niveaux -->
+    <div class="checkbox-group">
+      @for (n of niveaux; track $index) {
+        <mat-checkbox
+          (change)="toggleNiveau(n)">
+          {{ n }}
+        </mat-checkbox>
+      }
+    </div>
+
+  </mat-card-content>
+
+</mat-card>
+
 
 <table>
   <thead>
