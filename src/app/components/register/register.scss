@@ -1,12 +1,26 @@
-.link {
-    color: blue;
-    text-decoration: underline;
+.register-card {
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 16px;
 }
 
-.link:hover {
-    color: purple;
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
 }
 
-.link:active {
-    color: orangered;
+.actions-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #f44336;
+  margin-bottom: 16px;
 }

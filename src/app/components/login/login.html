@@ -1,11 +1,82 @@
-<h2>Connexion</h2>
-<form (ngSubmit)="login()">
-  <input type="text" placeholder="Nom utilisateur" [(ngModel)]="username" name="username" required>
-  <input type="password" placeholder="Mot de passe" [(ngModel)]="password" name="password" required>
-  <button type="submit">Se connecter</button>
-  <p style="color:red">{{ error }}</p>
-</form>
-<p>
-  Pas encore de compte ?
-  <a class="link" (click)="mode.changeMode('register')">Créer un compte</a>
-</p>
+<mat-card class="login-card">
+
+  <mat-card-header>
+    <mat-card-title>
+      Connexion
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form (ngSubmit)="login()" #loginForm="ngForm">
+
+      <!-- Username -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nom d'utilisateur</mat-label>
+        <mat-icon matPrefix>person</mat-icon>
+        <input
+          matInput
+          type="text"
+          name="username"
+          [(ngModel)]="username"
+          required>
+      </mat-form-field>
+
+      <!-- Password -->
+      <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Mot de passe</mat-label>
+
+      <mat-icon matPrefix>lock</mat-icon>
+
+      <input
+        matInput
+        [type]="hidePassword ? 'password' : 'text'"
+        name="password"
+        [(ngModel)]="password"
+        required>
+
+      <!-- 👁 Icône toggle -->
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        (click)="hidePassword = !hidePassword"
+        [attr.aria-label]="'Afficher le mot de passe'"
+        [attr.aria-pressed]="!hidePassword">
+
+        <mat-icon>
+          {{ hidePassword ? 'visibility' : 'visibility_off' }}
+        </mat-icon>
+
+      </button>
+    </mat-form-field>
+
+
+      <!-- Error -->
+      @if (error) {
+        <div class="error">
+          <mat-icon color="warn">error</mat-icon>
+          {{ error }}
+        </div>
+      }
+
+      <!-- Button -->
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        class="full-width">
+        <mat-icon>login</mat-icon>
+        Se connecter
+      </button>
+
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions class="actions-center">
+    <span>Pas encore de compte ?</span>
+    <button mat-button color="accent" (click)="mode.changeMode('register')">
+      Créer un compte
+    </button>
+  </mat-card-actions>
+
+</mat-card>
