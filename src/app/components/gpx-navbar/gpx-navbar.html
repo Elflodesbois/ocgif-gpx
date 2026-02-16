@@ -42,6 +42,10 @@
             >
                 <mat-icon>logout</mat-icon>Se déconnecter
             </button>
+        }@else {
+            <button matButton (click)="login()">
+                <mat-icon>login</mat-icon>Se connecter
+            </button>
         }
 
     </div>

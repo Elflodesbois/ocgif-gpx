@@ -220,11 +220,9 @@ export class MapService {
     }
 
     getLayerColor(name: string): string {
-        let layer = this.layers[name].layer;
+        const layer = this.layers[name].layer;
 
-        let ret = layer.get('color');
-
-        return ret;
+        return layer.get('color');
     }
 }
 
@@ -238,4 +236,6 @@ export class LayerInfo {
         this.layer = layer;
         this.visible = visible;
     }
+
+    
 }

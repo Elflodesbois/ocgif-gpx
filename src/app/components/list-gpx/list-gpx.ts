@@ -7,13 +7,26 @@ import { Difficulty  } from '../../services/difficulty.service';
 import { MatCheckboxChange, MatCheckboxModule } from "@angular/material/checkbox";
 import { MapService } from '../../services/map-service';
 import { Colours } from '../../services/colours';
-
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
 
 
 @Component({
     selector: 'app-list-gpx',
     standalone: true,
-    imports: [CommonModule, FormsModule, MatCheckboxModule],
+    imports: [CommonModule, 
+    FormsModule, MatCheckboxModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatChipsModule,
+    MatIconModule,
+    MatCheckboxModule,
+    MatDividerModule],
     templateUrl: './list-gpx.html',
     styleUrls: ['./list-gpx.scss']
 })

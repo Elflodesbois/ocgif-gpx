@@ -1,12 +1,51 @@
-<h2>Mes traces</h2>
-<ul>
-    @for (t of traces; track $index) {
-        <li>
-            {{ t.nom }} - {{ t.niveau }} - {{ t.distance_km }} km
-            <button (click)="deleteTrace(t.id)">Supprimer</button>
-        </li>
-    } @empty {
-        <p>Vous n'avez pas encore importé de trace.</p>
-    }
-  
-</ul>
+<h2 class="title">Mes traces</h2>
+
+@if (loading) {
+  <div class="spinner">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+}
+
+@if (!loading && traces.length === 0) {
+  <p class="empty">Aucune trace enregistrée.</p>
+}
+
+<div class="traces-container">
+  @for (t of traces; track t.id) {
+
+    <div class="flip-wrapper">
+      <div class="flip-inner">
+
+        <!-- FACE AVANT -->
+        <mat-card class="flip-front">
+          <mat-card-header>
+            <mat-card-title>{{ t.nom }}</mat-card-title>
+            <mat-card-subtitle>
+              {{ t.niveau }} • {{ t.distance_km }} km
+            </mat-card-subtitle>
+          </mat-card-header>
+        </mat-card>
+
+        <!-- FACE ARRIÈRE -->
+        <mat-card class="flip-back">
+          <app-gpx-preview-map [traceId]="t.id"></app-gpx-preview-map>
+        </mat-card>
+
+      </div>
+
+      <!-- BOUTON SUPPRIMER EN DEHORS DU FLIP -->
+      <div class="trace-actions">
+        <button
+          mat-icon-button
+          color="warn"
+          (click)="deleteTrace(t.id)"
+          aria-label="Supprimer la trace"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+
+    </div>
+
+  }
+</div>
