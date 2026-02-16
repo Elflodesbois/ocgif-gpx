@@ -28,8 +28,9 @@ CREATE TABLE traces (
     distance_km NUMERIC(6,2),
     denivele INT,
     date_parcours DATE,
-    fichier_gpx TEXT NOT NULL,   -- on garde comme actuellement
-    cree_le TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    fichier_path VARCHAR(500) NOT NULL,
+    cree_le TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    user_id INT REFERENCES users(id)
 );
 
 ALTER TABLE traces ADD COLUMN user_id INT REFERENCES users(id);
