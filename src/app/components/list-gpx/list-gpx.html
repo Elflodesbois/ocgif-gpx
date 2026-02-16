@@ -88,36 +88,43 @@
 
 
 <table>
-  <thead>
-    <tr>
-      <th (click)="sortColumn(0)">Nom <span>{{ getSortIcon(0) }}</span></th>
-      <th (click)="sortColumn(1)">Description <span>{{ getSortIcon(1) }}</span></th>
-      <th (click)="sortColumn(2)">Niveau <span>{{ getSortIcon(2) }}</span></th>
-      <th (click)="sortColumn(3)">Distance (km) <span>{{ getSortIcon(3) }}</span></th>
-      <th (click)="sortColumn(4)">Dénivelé (m) <span>{{ getSortIcon(4) }}</span></th>
-      <th (click)="sortColumn(5)">Date parcours <span>{{ getSortIcon(5) }}</span></th>
-      <th>GPX</th>
-      <th>difficulte été</th>
-      <th>difficulte hiver</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    @for (t of filtered; track $index) {
+    <thead>
         <tr>
-        <td>{{ t.nom }}</td>
-        <td>{{ t.description }}</td>
-        <td>{{ t.niveau }}</td>
-        <td>{{ t.distance_km }}</td>
-        <td>{{ t.denivele }}</td>
-        <td>{{ t.date_parcours }}</td>
-        <td>
-            <button (click)="download(t)">Télécharger</button>
-        </td>
-        <td [style.background]="t.difficulte?.normal" [title]="t.difficulte?.niveauNormal"></td>
-        <td [style.background]="t.difficulte?.difficile" [title]="t.difficulte?.niveauDifficile"></td>
+            <th (click)="sortColumn(0)">Sélectionner <span>{{ getSortIcon(0) }}</span></th>
+            <th (click)="sortColumn(1)">Nom <span>{{ getSortIcon(1) }}</span></th>
+            <th (click)="sortColumn(2)">Description <span>{{ getSortIcon(2) }}</span></th>
+            <th (click)="sortColumn(3)">Niveau <span>{{ getSortIcon(3) }}</span></th>
+            <th (click)="sortColumn(4)">Distance (km) <span>{{ getSortIcon(4) }}</span></th>
+            <th (click)="sortColumn(5)">Dénivelé (m) <span>{{ getSortIcon(5) }}</span></th>
+            <th (click)="sortColumn(6)">Date parcours <span>{{ getSortIcon(6) }}</span></th>
+            <th>GPX</th>
+            <th>difficulte été</th>
+            <th>difficulte hiver</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        @for (t of filtered; track $index) {
+            <tr>
+                <td>
+                    <mat-checkbox
+                    (change)="handleSelectionStatus($event, t)"
+                    >
+                </mat-checkbox>
+            </td>
+            <td>{{ t.nom }}</td>
+            <td>{{ t.description }}</td>
+            <td>{{ t.niveau }}</td>
+            <td>{{ t.distance_km }}</td>
+            <td>{{ t.denivele }}</td>
+            <td>{{ t.date_parcours }}</td>
+            <td>
+                <button (click)="download(t)">Télécharger</button>
+            </td>
+            <td [style.background]="t.difficulte?.normal" [title]="t.difficulte?.niveauNormal"></td>
+            <td [style.background]="t.difficulte?.difficile" [title]="t.difficulte?.niveauDifficile"></td>
         </tr>
     }
     
-  </tbody>
+</tbody>
 </table>

@@ -43,10 +43,6 @@
   left: 0;
 }
 
-.flip-front {
-  z-index: 2;
-}
-
 .flip-back {
   transform: rotateY(180deg);
   display: flex;

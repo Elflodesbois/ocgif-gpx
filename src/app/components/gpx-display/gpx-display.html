@@ -2,11 +2,11 @@
 <div id="gpx-display-main">
     @switch (mode.state()) {
         @case ('traces') {
-            <div id="gpx-display-left">
-                <app-list-gpx></app-list-gpx>
-            </div>
-            <div id="gpx-display-right">
+            <div id="gpx-display-map">
                 <app-gpx-map></app-gpx-map>
+            </div>
+            <div id="gpx-display-after">
+                <app-list-gpx></app-list-gpx>
             </div>
         }
 
@@ -24,9 +24,7 @@
 
         @case ('liste') {
             <app-mes-traces></app-mes-traces>
-            
         }
-
 
         @default {
             <p>ERREUR! Chloé, si tu vois ça, c'est que tu n'as pas mis <br />

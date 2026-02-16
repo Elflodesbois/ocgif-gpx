@@ -1,8 +1,9 @@
 import { Component, input, output } from '@angular/core';
+import { MatIcon } from "@angular/material/icon";
 
 @Component({
   selector: 'app-toggle-state-button',
-  imports: [],
+  imports: [MatIcon],
   templateUrl: './toggle-state-button.html',
   styleUrl: './toggle-state-button.scss'
 })

@@ -1,17 +1,15 @@
 #gpx-display-main {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-around;
 }
 
-#gpx-display-main div {
-    width: 45vw;
+#gpx-display-map {
+    height: 80vh;
+    min-width: 80vw;
 }
 
-#gpx-display-right {
-    min-height: 80vh;
-}
-
-#gpx-display-right * {
-    min-height: 80vh;
+#gpx-display-after {
+    padding-left: 1vw;
+    padding-right: 1vw;
 }
