@@ -90,7 +90,7 @@
 <table>
     <thead>
         <tr>
-            <th (click)="sortColumn(0)">Sélectionner <span>{{ getSortIcon(0) }}</span></th>
+            <th>Sélectionner</th>
             <th (click)="sortColumn(1)">Nom <span>{{ getSortIcon(1) }}</span></th>
             <th (click)="sortColumn(2)">Description <span>{{ getSortIcon(2) }}</span></th>
             <th (click)="sortColumn(3)">Niveau <span>{{ getSortIcon(3) }}</span></th>
@@ -111,20 +111,25 @@
                     (change)="handleSelectionStatus($event, t)"
                     >
                 </mat-checkbox>
-            </td>
-            <td>{{ t.nom }}</td>
-            <td>{{ t.description }}</td>
-            <td>{{ t.niveau }}</td>
-            <td>{{ t.distance_km }}</td>
-            <td>{{ t.denivele }}</td>
-            <td>{{ t.date_parcours }}</td>
-            <td>
-                <button (click)="download(t)">Télécharger</button>
-            </td>
-            <td [style.background]="t.difficulte?.normal" [title]="t.difficulte?.niveauNormal"></td>
-            <td [style.background]="t.difficulte?.difficile" [title]="t.difficulte?.niveauDifficile"></td>
-        </tr>
-    }
-    
-</tbody>
+                </td>
+                <td>{{ t.nom }}</td>
+                <td>{{ t.description }}</td>
+                <td>{{ t.niveau }}</td>
+                <td>{{ t.distance_km }}</td>
+                <td>{{ t.denivele }}</td>
+                <td>{{ t.date_parcours }}</td>
+                <td>
+                    <button (click)="download(t)">Télécharger</button>
+                </td>
+                <td [style.background]="t.difficulte?.normal" [title]="t.difficulte?.niveauNormal"></td>
+                <td [style.background]="t.difficulte?.difficile" [title]="t.difficulte?.niveauDifficile"></td>
+            </tr>
+        } @empty {
+            <tr>
+                <td id="filtered-traces-empty" colspan="10">
+                    Aucune trace ne correspond aux filtres sélectionnés, ou aucune trace n'est enregistrée dans le système.
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
