@@ -13,6 +13,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -26,7 +29,10 @@ import { MatDividerModule } from '@angular/material/divider';
     MatChipsModule,
     MatIconModule,
     MatCheckbox,
-    MatDividerModule],
+    MatDividerModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    DatePipe],
     templateUrl: './list-gpx.html',
     styleUrls: ['./list-gpx.scss']
 })
@@ -42,6 +48,8 @@ export class ListGpx implements OnInit {
     maxDistance?: number;
     minDenivele?: number;
     maxDenivele?: number;
+    minDate?: Date;   // format YYYY-MM-DD (input type="date")
+    maxDate?: Date;
     keywordsInput = '';
     keywords: string[] = [];
     niveauxFiltres: string[] = [];
@@ -125,6 +133,19 @@ export class ListGpx implements OnInit {
     
     applyFilters() {
         this.filtered = this.traces.filter(t => {
+           // Filtre date
+            if (this.minDate) {
+                const traceDate = t.date_parcours ? new Date(t.date_parcours) : null;
+                if (!traceDate || traceDate < this.minDate) return false;
+            }
+            if (this.maxDate) {
+                const traceDate = t.date_parcours ? new Date(t.date_parcours) : null;
+
+                const max = new Date(this.maxDate);
+                max.setHours(23, 59, 59, 999);
+
+                if (!traceDate || traceDate > max) return false;
+            }
             if (this.minDistance && (t.distance_km ?? 0) < this.minDistance) return false;
             if (this.maxDistance && (t.distance_km ?? 0) > this.maxDistance) return false;
             

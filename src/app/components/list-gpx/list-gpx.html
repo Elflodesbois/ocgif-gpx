@@ -45,6 +45,31 @@
       </mat-form-field>
     </div>
 
+    <!-- Date -->
+    <div class="filter-row">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Date min</mat-label>
+        <input matInput
+              [matDatepicker]="pickerMin"
+              [(ngModel)]="minDate"
+              (dateChange)="applyFilters()">
+        <mat-datepicker-toggle matIconSuffix [for]="pickerMin"></mat-datepicker-toggle>
+        <mat-datepicker #pickerMin></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Date max</mat-label>
+        <input matInput
+              [matDatepicker]="pickerMax"
+              [(ngModel)]="maxDate"
+              (dateChange)="applyFilters()">
+        <mat-datepicker-toggle matIconSuffix [for]="pickerMax"></mat-datepicker-toggle>
+        <mat-datepicker #pickerMax></mat-datepicker>
+      </mat-form-field>
+
+    </div>
+
     <mat-divider></mat-divider>
 
     <!-- Mots-clés -->
@@ -117,7 +142,7 @@
                 <td>{{ t.niveau }}</td>
                 <td>{{ t.distance_km }}</td>
                 <td>{{ t.denivele }}</td>
-                <td>{{ t.date_parcours }}</td>
+                <td>{{ t.date_parcours | date:'dd/MM/yyyy' }}</td>
                 <td>
                     <button (click)="download(t)">Télécharger</button>
                 </td>
