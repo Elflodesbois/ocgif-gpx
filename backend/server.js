@@ -24,4 +24,4 @@ app.get("/", (req, res) => {
 app.use('/api/gpx', require('./routes/gpx')(pool));
 app.use('/api/users', require('./routes/users')(pool));
 
-app.listen(3000, () => console.log("➡ API démarrée sur http://localhost:3000"));
+app.listen(process.env.PORT, () => console.log("➡ API démarrée sur http://localhost:3000"));
