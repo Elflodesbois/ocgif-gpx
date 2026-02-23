@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GpxService {
 
-  private apiUrl = "http://localhost:3000/api/gpx";
+  private apiUrl = "http://localhost:"+environment.backendPort+"/api/gpx";
 
   constructor(private http: HttpClient) {}
 
@@ -16,7 +17,7 @@ export class GpxService {
   }
 
   getTraces() {
-    return this.http.get<any[]>('http://localhost:3000/api/gpx');
+    return this.http.get<any[]>('http://localhost:'+environment.backendPort+'/api/gpx');
   }
 
   downloadTrace(id: number) {

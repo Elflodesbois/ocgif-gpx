@@ -12,6 +12,7 @@ import Stroke from 'ol/style/Stroke';
 import CircleStyle from 'ol/style/Circle';
 import Fill from 'ol/style/Fill';
 import { getCenter } from 'ol/extent';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-gpx-preview-map',
@@ -74,7 +75,7 @@ export class GpxPreviewMap implements AfterViewInit {
     });
 
     // Charger le GPX
-    fetch(`http://localhost:3000/api/gpx/download/${this.traceId}`)
+    fetch(`http://localhost:${environment.backendPort}/api/gpx/download/${this.traceId}`)
       .then(res => res.text())
       .then(gpxText => {
         const format = new GPX();

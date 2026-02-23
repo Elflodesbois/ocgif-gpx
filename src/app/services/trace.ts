@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Trace {
-  private baseUrl = 'http://localhost:3000/api/gpx';
+  private baseUrl = 'http://localhost:'+environment.backendPort+'/api/gpx';
 
   constructor(private http: HttpClient) {}
 

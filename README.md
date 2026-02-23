@@ -25,7 +25,7 @@ Installer les dépendances: `npm install express pg bcrypt jsonwebtoken dotenv c
 
 Lancer le backend avec la commande: `node server.js`.
 
-**En cas de problème de ports, ceux-ci sont configurables dans `backend/.env`**
+**En cas de problème de ports, ceux-ci sont configurables dans `backend/.env` et dans `src/app/environments/environment.ts`**
 
 ### Frontend
 Angular doit être installé sur la machine accueillant le frontend.
