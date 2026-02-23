@@ -66,7 +66,7 @@ export class GpxPreviewMap implements AfterViewInit {
         pinchZoom: false,
         keyboard: false
       }),
-      controls: controlDefaults({ zoom: false, rotate: false }),
+      controls: controlDefaults({ zoom: false, rotate: false, attribution: false }),
       view: new View({
         center: [0, 0],
         zoom: 2
