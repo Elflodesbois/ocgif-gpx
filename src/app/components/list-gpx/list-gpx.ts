@@ -233,12 +233,6 @@ export class ListGpx implements OnInit {
     handleSelectionStatus(event: MatCheckboxChange, trace: any) {
         let layerName = trace.nom;
 
-        this.gpxService.getTraces().subscribe(load => {
-            console.log(load);
-        });
-
-        console.log(layerName);
-
         if (event.checked) {
             if (!this.mapWrapper.checkLayerPresenceByName(layerName)) {
                 this.gpxService.downloadTrace(trace.id).subscribe(load => {

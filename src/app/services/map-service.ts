@@ -160,7 +160,6 @@ export class MapService {
             if (key === name) {
                 this.map.removeLayer(this.layers[name].layer);
                 delete this.layers[name];
-                console.log(this.layers);
                 return;
             }
         }

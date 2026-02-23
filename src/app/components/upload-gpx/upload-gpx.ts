@@ -122,7 +122,6 @@ analyserGPX(file: File) {
 
       const timeTag = xml.getElementsByTagName('time')[0];
       if (timeTag) {
-        console.log(new Date(Date.parse(timeTag.textContent!.split('T')[0])));
         this.date_parcours = new Date(Date.parse(timeTag.textContent!.split('T')[0]));
       }
     };

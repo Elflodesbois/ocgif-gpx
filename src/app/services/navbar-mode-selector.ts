@@ -12,7 +12,6 @@ export class NavbarModeSelector {
 
     public changeMode(newMode: NavbarMode) {
         this.state.set(newMode);
-		console.log(this.state());
     }
 }
 
