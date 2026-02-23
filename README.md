@@ -19,11 +19,11 @@ Si elle est protégée par un mot de passe, il faut renseigner celui-ci dans le 
 ### Backend
 Ouvrir un terminal.
 
-Se positionner dans le dossier du backend pour toutes les opérations de cette section: `cd backend`.
+Se positionner dans le dossier du backend pour toutes les opérations de cette section: ```cd backend```.
 
-Installer les dépendances: `npm install express pg bcrypt jsonwebtoken dotenv cors`.
+Installer les dépendances: ```npm install express pg bcrypt jsonwebtoken dotenv cors```.
 
-Lancer le backend avec la commande: `node server.js`.
+Lancer le backend avec la commande: ```node server.js```.
 
 **En cas de problème de ports, ceux-ci sont configurables dans `backend/.env` et dans `src/app/environments/environment.ts`**
 
@@ -32,8 +32,8 @@ Angular doit être installé sur la machine accueillant le frontend.
 
 Ouvrir un terminal à la racine du projet.
 
-Installer les dépendances: `npm i`.
+Installer les dépendances: ```npm i```.
 
-Lancer l'interface avec: `ng serve`.
+Lancer l'interface avec: ```ng serve```.
 
 L'interface devrait être disponible à l'adresse suivante: [https://localhost:4200](https://localhost:4200)
