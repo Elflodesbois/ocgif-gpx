@@ -21,7 +21,7 @@ Ouvrir un terminal.
 
 Se positionner dans le dossier du backend pour toutes les opérations de cette section: ```cd backend```.
 
-Installer les dépendances: ```npm install express pg bcrypt jsonwebtoken dotenv cors```.
+Installer les dépendances: ```npm install express multer pg bcrypt jsonwebtoken dotenv cors```.
 
 Lancer le backend avec la commande: ```node server.js```.
 

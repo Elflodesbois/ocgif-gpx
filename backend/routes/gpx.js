@@ -126,7 +126,7 @@ module.exports = function(pool) {
         }
     });
 
-    // 🔹 Voir toutes ses traces
+    // Voir toutes ses traces
     router.get('/mes-traces', authMiddleware, async (req, res) => {
         try {
             const result = await pool.query(`
@@ -143,7 +143,7 @@ module.exports = function(pool) {
         }
     });
 
-    // 🔹 Supprimer une trace
+    // Supprimer une trace
     router.delete('/mes-traces/:id', authMiddleware, async (req, res) => {
         const { id } = req.params;
 

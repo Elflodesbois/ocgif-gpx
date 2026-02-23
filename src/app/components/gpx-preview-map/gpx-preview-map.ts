@@ -91,7 +91,7 @@ export class GpxPreviewMap implements AfterViewInit {
 
         vectorSource.addFeatures(features);
 
-        // 🔹 Centrer et ajuster automatiquement pour voir toute la trace
+        // Centrer et ajuster automatiquement pour voir toute la trace
         const extent = vectorSource.getExtent();
         if (extent) {
           this.map.getView().fit(extent, {

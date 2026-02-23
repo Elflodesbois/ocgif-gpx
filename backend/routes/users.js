@@ -9,7 +9,7 @@ module.exports = function(pool) {
     
 
 
-    // 🔹 Inscription
+    // Inscription
     router.post('/register', async (req, res) => {
         try {
             const { username, password } = req.body;
@@ -39,7 +39,7 @@ module.exports = function(pool) {
         }
     });
 
-    // 🔹 Connexion
+    // Connexion
     router.post('/login', async (req, res) => {
         try {
             const { username, password } = req.body;

@@ -40,7 +40,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 })
 export class UploadGpx {
 
-  // 🔹 RÉFÉRENCE À L’INPUT FILE (OBLIGATOIRE POUR RESET)
+  // RÉFÉRENCE À L’INPUT FILE (OBLIGATOIRE POUR RESET)
   @ViewChild('gpxInput') gpxInput!: ElementRef<HTMLInputElement>;
   
   nom = '';
